@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NetCargo</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="title_activity_lu_you">LuYouActivity</string>
+    <string name="title_activity_main_menu">MainMenuActivity</string>
+
+    <!-- *******  登录界面 ******** -->
+    <string name="deivceID">Deivece ID：</string>
+    <string name="versionID">Version：</string>
+    <string name="userName">UserName</string>
+    <string name="password">PassWord</string>
+    <string name="remuserName">Remember Username</string>
+    <string name="rempassword">Remember Password</string>
+    <string name="login">Login</string>
+    <string name="setting">Setting</string>
+
+    <!-- 项目路由 -->
+    <string name="project">Project</string>
+    <string name="project_name">Project ID</string>
+    <string name="msg_select_luyou">Select ROU/SVC</string>
+    <string name="task_tt">Track&#038;Trace</string>
+    <string name="msg_select_node">Select Mode</string>
+
+    <!-- 陆运 -->
+    <string name="submit">Submit</string>
+    <string name="barcode">BarCode</string>
+    <string name="package_no">Package No</string>
+    <string name="tractor_no">Tractor LIC</string>
+    <string name="shift">Shift</string>
+    <string name="driver_phone">Driver M.P</string>
+
+    <!-- 铁运 -->
+    <string name="carriage_no">Carriage No</string>
+
+    <!-- 海运 -->
+    <string name="vessel_name">Vessel</string>
+    <string name="voyage">Voyage</string>
+    <string name="holds">Holds</string>
+
+    <!-- 空运 -->
+    <string name="flight">Flight</string>
+
+    <!-- 集装箱 -->
+    <string name="cntr_no">CNTR No</string>
+
+    <!-- 装卸 -->
+    <string name="vendor">Vendor</string>
+    <string name="select_vendor">Select LiftCrane Vendor</string>
+
+    <!-- 货场 -->
+    <string name="field_no">Field No</string>
+    <string name="keeper">Keeper</string>
+
+    <!-- 绑扎 -->
+    <string name="lashing_vendor">Vendor</string>
+    <string name="select_lashing_vendor">Select Lash Vendor</string>
+    <string name="lashing_tips">lashing Tips</string>
+
+    <!-- 检验 -->
+    <string name="survey_vendor">Vendor</string>
+    <string name="select_survey_vendor">Select Survey Vendor</string>
+    <string name="conclusion">Conclusion</string>
+
+    <!-- 打尺 -->
+    <string name="mesurement_vendor">Vendor</string>
+    <string name="select_mesurement_vendor">Select Measure Vendor</string>
+    <string name="monitor">Monitor</string>
+    <string name="monitor_2">Inspector</string>
+    <string name="checker">Checker</string>
+    <string name="updated">Updated</string>
+    <string name="initial">Initial</string>
+    <string name="diff">DIFF</string>
+    <string name="length_new">New_Length(mm)</string>
+    <string name="width_new">New_Width(mm)</string>
+    <string name="height_new">New_Height(mm)</string>
+    <string name="length_old">Old_Length(mm)</string>
+    <string name="width_old">Old_Width(mm)</string>
+    <string name="height_old">Old_Height(mm)</string>
+
+    <!-- 安装 -->
+    <string name="goods_code">GoodsBarcode</string>
+    <string name="goods_number">Goods No</string>
+    <string name="goods_name">D.Goods</string>
+    <string name="assembled_tips">AssembledTips</string>
+    <string name="produced_tips">ProducedTips</string>
+    <string name="package_type">Package Type</string>
+    <string name="package_vendor">Vendor</string>
+    <string name="select_package_vendor">Select Pack Vendor</string>
+
+    <!-- 抵达 -->
+    <string name="arrival">Arrival</string>
+    <string name="packages_count">QTY/Packages</string>
+
+    <!-- 单件录入 -->
+    <string name="mode_step">Mode&#038;Step</string>
+    <string name="select_mode_step">Select Mode&#038;Step</string>
+    <string name="pack_name">D.Package</string>
+    <string name="lenght">L(mm)</string>
+    <string name="widht">W(mm)</string>
+    <string name="height">H(mm)</string>
+    <string name="weight">G.W(kg)</string>
+    <string name="logistics_tips">LogisticsTips</string>
+    <string name="photo">Photo</string>
+
+    <!-- 异常 -->
+    <string name="exceptional_mode">Mode&#038;Step</string>
+    <string name="select_exceptional">Select Mode&#038;Step</string>
+    <string name="exceptional_remarks">D.Problem</string>
+
+    <!-- 退运 -->
+    <string name="return_cargo_mode">Mode&#038;Step</string>
+    <string name="select_return_cargo_mode">Select Mode&#038;Step</string>
+    <string name="return_cargo_reason">D.Return</string>
+    <string name="authorized_person">Authorized Person</string>
+
+    <!-- 查询 -->
+    <string name="solution">D.Solution</string>
+    <string name="exceptional_count">QTY/Problem</string>
+    <string name="return_cargo_count">QTY/Return</string>
+    <string name="upload_count">QTY/Upload</string>
+    <string name="search">Search</string>
+    <string name="status">Status</string>
+    <string name="goods_barcode">BarCode</string>
+    <string name="goods_no">Package No</string>
+
+    <!-- 公用参数 -->
+    <string name="settings">Settings</string>
+    <string name="update_password">Update Password</string>
+    <string name="clean_data">Clean Data</string>
+    <string name="required">Required</string>
+    <string name="remarks">Remarks</string>
+    <string name="scan_count">QTY/Scan</string>
+    <string name="load_count">QTY/Load</string>
+    <string name="save">Save</string>
+    <string name="code">二维码</string>
+    <string name="task_name">Task ID</string>
+    <string name="select_task">Select Task ID</string>
+    <string name="pic">PIC</string>
+    <string name="tel">TEL</string>
+    <string name="user_name">UserName</string>
+    <string name="update_time">UpdateTime</string>
+    <string name="no_2">No</string>
+    <string name="ok">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="backToLogin">Confirm to Homepage？</string>
+    <string name="backAll">Confirm the exit process?</string>
+    <string name="task_name_search">Please Select Task</string>
+    <string name="returns">Returns</string>
+    <string name="off">Off</string>
+    <string name="title">Title</string>
+    <string name="task_following">Track&#038;Trace</string>
+    <string name="inland_service">InlandService</string>
+    <string name="loading">Loading</string>
+    <string name="discharge">Discharge</string>
+    <string name="new_1">New</string>
+    <string name="problemcargo">ProblemCargo</string>
+    <string name="returncargo">ReturnCargo</string>
+    <string name="railwaycargo">RailwayCargo</string>
+    <string name="generalcargo">GeneralCargo</string>
+    <string name="aircargo">AirCargo</string>
+    <string name="containercargo">ContainerCargo</string>
+    <string name="containercargo_1">Loading</string>
+    <string name="containercargo_2">Devanning</string>
+    <string name="liftcrane_service">LiftCrane Service</string>
+    <string name="transityard_service">TransitYard</string>
+    <string name="in">IN</string>
+    <string name="out">OUT</string>
+    <string name="lashing_service">Lashing Service</string>
+    <string name="survey_service">Survey Service</string>
+    <string name="mesurement">Mesurement</string>
+    <string name="assembly">Assembly</string>
+    <string name="produced">Produced</string>
+    <string name="packing_service">PackingService</string>
+    <string name="image_count">IMG Count</string>
+    <string name="pack_tips">Pack tips</string>
+    <string name="u_p_not_null">Username or password is Required</string>
+    <string name="loging">loging</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="prompt">Prompt</string>
+    <string name="project_route">Project Route</string>
+    <string name="select_project">Select Project</string>
+    <string name="code_not_null">Barcode is Required</string>
+    <string name="img_not_null">Image is Required</string>
+    <string name="task_not_null">Task name is Required</string>
+    <string name="task_list">Task List</string>
+    <string name="packing_operation">Packing Operation</string>
+    <string name="str_start_scan">Start Scan</string>
+    <string name="str_stop_scan">Stop Scan</string>
+    <string name="commit_time">Time/Submit</string>
+    <string name="str_is_stop_scan">"Stoping..."</string>
+    <string name="str_open_identify_pattern">"Scanning mode is being turned on..."</string>
+    <string name="str_open_recognition_fail">"开启识别模式失败...点击继续..."</string>
+    <string name="str_stop_scanning_operation">"停止扫描操作失败...点击继续..."</string>
+    <string name="select_from_album">Select from Album</string>
+    <string name="title_activity_strap_scan">StrapScanActivity</string>
+    <string name="title_activity_off_line_scan">OffLineScanActivity</string>
+    <string name="msg_click_delete">Click Delete</string>
+    <string name="enterlibrary_table_barcode">BarCode</string>
+    <string name="enterlibrary_table_admin">Admin</string>
+    <string name="enterlibrary_table_libs">Libs</string>
+    <string name="enterlibrary_table_iden">Iden</string>
+    <string name="stack_digit">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ-_*/</string>
+
+    <string name="select_project_route_mode">Select Project/Route/Mode</string>
+    <string name="searching">Searching</string>
+    <string name="scan_records">Scan records</string>
+    <string name="tractor_LIC_shift_is_required">Tractor LIC/Shift is Required</string>
+    <string name="vessel_voyage_holds_is_required">Vessel/Voyage/Holds is Required</string>
+    <string name="carriage_no_is_required">Carriage No.is Required</string>
+    <string name="field_no_is_required">Field No. is Required</string>
+    <string name="vendor_is_required">Measure Vendor is Required</string>
+    <string name="d_problem_is_required">D.Problem is Required</string>
+    <string name="barcode_is_required">Barcode is Required</string>
+    
+    <string name="barcode_does_not_exist">BarCode Does Not Exist</string>
+	<string name="lash_vendor_is_required">Lash_Vendor is required</string>
+	<string name="LiftCrane_vendor_is_required">LiftCrane Vendor is required</string>
+	<string name="Survey_vendor_is_required">Survey Vendor is Required</string>
+	<string name="Pack_vendor_is_required">Pack Vendor is Required</string>
+	<string name="PDA_User_is_not_Activate">PDA User is not Activated</string>
+	<string name="Username_is_Expired">Company ID is Expired</string>
+	<string name="Company_is_Closed">Company ID is Closed</string>
+	
+	<string name="tiemai">贴  唛</string>
+</resources>
