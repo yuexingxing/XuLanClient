@@ -379,6 +379,8 @@ public class PackActivity extends BaseActivity implements OnClickListener{
 									ScanData scanData = dataList.get(i);
 									if (scanData.getMinutePackNumber().equals(list.get(j).getMinutePackNumber())) {
 										list.remove(j);
+										--j;
+										break;
 									}
 								}
 							}

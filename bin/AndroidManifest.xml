@@ -124,6 +124,7 @@
         </activity>
         <activity
             android:name="com.xulan.client.activity.action.land.LandActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -159,11 +160,13 @@
         </activity>
         <activity
             android:name="com.xulan.client.activity.action.DoBoxScanActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.xulan.client.activity.action.UppackBoxScanMainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -174,6 +177,7 @@
         </activity>
         <activity
             android:name="com.xulan.client.StrapActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -184,6 +188,7 @@
         </activity>
         <activity
             android:name="com.xulan.client.activity.air.AirInstallActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -204,16 +209,19 @@
         </activity>
         <activity
             android:name="com.xulan.client.activity.shipping.ShippingActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.xulan.client.activity.freightyard.StorageActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.xulan.client.activity.ruler.RulerActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -224,16 +232,19 @@
         </activity>
         <activity
             android:name="com.xulan.client.activity.test.TestActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.xulan.client.activity.install.InstallActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.xulan.client.activity.pack.PackActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -249,11 +260,13 @@
         </activity>
         <activity
             android:name="com.xulan.client.activity.action.StrapScanActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.xulan.client.activity.action.OffLineScanActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
@@ -300,7 +313,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
-        
         <activity
             android:name="com.xulan.client.activity.stick.StickActivity"
             android:screenOrientation="portrait"

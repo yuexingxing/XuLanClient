@@ -350,19 +350,24 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 								scanData.setPackBarcode(pack_code);
 								scanData.setPackNumber(pack_number);
 								scanData.setMainGoodsId(goods_id);
+								scanData.setScaned("0");
 
 								list.add(scanData);
 							}
+							
 							List<ScanData> notUploadDataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId, taskId);
 							dataList.addAll(notUploadDataList);
 							
 							//去除重复数据
 							for (int j = 0; j < list.size(); j++) {
+								
 								for (int i = 0; i < dataList.size(); i++) {
+									
 									ScanData scanData = dataList.get(i);
 									if (scanData.getPackNumber().equals(list.get(j).getPackNumber())) {
 										list.remove(j);
 										--j;
+										break;
 									}
 								}
 							}
@@ -476,4 +481,5 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 
 		RFID.stopRFID();
 	}
+	
 }

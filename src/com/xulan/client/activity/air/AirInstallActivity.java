@@ -358,6 +358,8 @@ public class AirInstallActivity extends BaseActivity implements OnClickListener 
 									ScanData scanData = dataList.get(i);
 									if (scanData.getPackNumber().equals(list.get(j).getPackNumber())) {
 										list.remove(j);
+										--j;
+										break;
 									}
 								}
 							}

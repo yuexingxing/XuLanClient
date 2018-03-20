@@ -363,6 +363,8 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 									ScanData scanData = dataList.get(i);
 									if (scanData.getPackNumber().equals(list.get(j).getPackNumber())) {
 										list.remove(j);
+										--j;
+										break;
 									}
 								}
 							}

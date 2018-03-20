@@ -102,7 +102,7 @@ public abstract class BaseActivity extends Activity {
 					RfidInfo info = listTag.get(i);
 					Log.v("rfid", "保存后查看数据: " + info.getId() + "," + info.getPack_barcode() + "," + info.getLink_num());
 					if(info.getPack_barcode().equals(pack_barcode)){
-//						info.setSaved(true);
+						//						info.setSaved(true);
 						break;
 					}
 				}
@@ -187,5 +187,15 @@ public abstract class BaseActivity extends Activity {
 
 	}
 
+	/**
+	 * 
+	 */
+	public void onDestory(){
+		super.onDestroy();
+
+		if(MyApplication.getEventBus() != null){
+			MyApplication.getEventBus().unregister(this);
+		}
+	}
 
 }

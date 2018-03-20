@@ -92,7 +92,7 @@ public class ScanData implements Serializable {
 	public String company_id = ""; //装卸公司id
 	public String TelPerson = "";// 联系人
 	public String AbnormalLink = "";// 异常节点
-	public String Scaned = "";// 是否扫描
+	public String Scaned = "0";// 是否扫描
 	public String AbnormalCause = "";// 异常原因
 	public String ReturnedCargoPic = "";// 退运图片
 	public String ReturnedCargoFile = "";// 退运图片路径
