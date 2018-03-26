@@ -75,12 +75,12 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 	private RelativeLayout billCodeImg;
 
 	private int scan_num = 0;
-	private int scan_num_sum = 0;
+	private int scan_count_num = 0;
 
 	private String taskId = "";
 	private String company_id;
 	private ListView mListView;
-	//	private CommonAdapter<ScanData> commonAdapter;
+//	private CommonAdapter<ScanData> commonAdapter;
 	private ListViewAdapter commonAdapter;
 	private List<ScanData> dataList = new ArrayList<ScanData>();
 	private List<ScanData> uploadList = new ArrayList<ScanData>();
@@ -92,30 +92,30 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 		setContentViewId(R.layout.activity_stick, this);
 		ViewUtils.inject(this);
 
-		//		requestGetWXURL();
+//		requestGetWXURL();
 	}
-
+	
 	private Bitmap generateBitmap(String content,int width, int height) {  
-		QRCodeWriter qrCodeWriter = new QRCodeWriter();  
-		Map<EncodeHintType, String> hints = new HashMap();  
-		hints.put(EncodeHintType.CHARACTER_SET, "utf-8");  
-		try {  
-			BitMatrix encode = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);  
-			int[] pixels = new int[width * height];  
-			for (int i = 0; i < height; i++) {  
-				for (int j = 0; j < width; j++) {  
-					if (encode.get(j, i)) {  
-						pixels[i * width + j] = 0x00000000;  
-					} else {  
-						pixels[i * width + j] = 0xffffffff;  
-					}  
-				}  
-			}  
-			return Bitmap.createBitmap(pixels, 0, width, width, height, Bitmap.Config.RGB_565);  
-		} catch (WriterException e) {  
-			e.printStackTrace();  
-		}  
-		return null;  
+	    QRCodeWriter qrCodeWriter = new QRCodeWriter();  
+	    Map<EncodeHintType, String> hints = new HashMap();  
+	    hints.put(EncodeHintType.CHARACTER_SET, "utf-8");  
+	    try {  
+	        BitMatrix encode = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);  
+	        int[] pixels = new int[width * height];  
+	        for (int i = 0; i < height; i++) {  
+	            for (int j = 0; j < width; j++) {  
+	                if (encode.get(j, i)) {  
+	                    pixels[i * width + j] = 0x00000000;  
+	                } else {  
+	                    pixels[i * width + j] = 0xffffffff;  
+	                }  
+	            }  
+	        }  
+	        return Bitmap.createBitmap(pixels, 0, width, width, height, Bitmap.Config.RGB_565);  
+	    } catch (WriterException e) {  
+	        e.printStackTrace();  
+	    }  
+	    return null;  
 	}  
 
 	@Override
@@ -127,65 +127,77 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 		stick_edt_package_code = (EditText) findViewById(R.id.stick_edt_package_code);
 		stick_scan_count = (EditText) findViewById(R.id.stick_scan_count);
 		stick_pack_name = (EditText) findViewById(R.id.stick_pack_name);
-
+		
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-
+		
 		scan_num = dataList.size();
-
+		
 		commonAdapter = new ListViewAdapter(mContext, dataList);
-
+		
 		mListView.setAdapter(commonAdapter);
-
+		
+//		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.stick_item) {
+//
+//			@Override
+//			public void convert(ViewHolder helper, ScanData item) {
+//
+//				helper.setText(R.id.stick_tv1, commonAdapter.getIndex());
+//				helper.setText(R.id.stick_tv2, item.getPackBarcode());
+//				helper.setText(R.id.stick_tv3, item.getPackNumber());
+//				helper.setText(R.id.stick_tv4, item.getGoodsName());
+//
+//				helper.setText(R.id.stick_tv10, item.getScanUser());
+//				helper.setText(R.id.stick_tv11, item.getScanTime());
+//			}
+//			
+//		});
+		
 		mListView.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
 				// TODO Auto-generated method stub
-				//				List<ScanData> dataList2 = commonAdapter.getDataList();
-
-				ScanData scanData = dataList.get(arg2);
-				stick_edt_package_code.setText(scanData.getPackBarcode());
-				stick_edt_package_number.setText(scanData.getPackNumber());
-				stick_pack_name.setText(scanData.getGoodsName());
+				List<ScanData> dataList2 = commonAdapter.getDataList();
+				stick_edt_package_code.setText(dataList2.get(arg2).getPackBarcode());
+				stick_edt_package_number.setText(dataList2.get(arg2).getPackNumber());
+				stick_pack_name.setText(dataList2.get(arg2).getGoodsName());
 			}
 		});
-
+		
 		stick_edt_package_number.addTextChangedListener(new TextWatcher(){  
-			@Override  
-			public void afterTextChanged(Editable arg0) {  
-			}  
-
-			@Override  
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {  
-			}  
-
-			@Override  
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {  
-				// TODO Auto-generated method stub  
-				//				commonAdapter.getFilter().filter(arg0);  
-				//               也可以在这里筛选数据,但这不是异步的，有隐患，最好用系统提供的Filter类                
-				//               for (Iterator<String> iterator = mArrayList.iterator(); iterator  
-				//                          .hasNext();) {  
-				//                      String name = iterator.next();  
-				//  
-				//                      if (name.contains(arg0)) {  
-				//                          mFilteredArrayList.add(name);  
-				//                      }  
-				//               mListViewAdapter.changeList(mFilteredArrayList);  
-				//               mListViewAdapter.notifyDataSetChanged();  
-			}  
-
-		});  
-
+            @Override  
+            public void afterTextChanged(Editable arg0) {  
+            }  
+  
+            @Override  
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {  
+            }  
+  
+            @Override  
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {  
+                // TODO Auto-generated method stub  
+            	commonAdapter.getFilter().filter(arg0);  
+//               也可以在这里筛选数据,但这不是异步的，有隐患，最好用系统提供的Filter类                
+//               for (Iterator<String> iterator = mArrayList.iterator(); iterator  
+//                          .hasNext();) {  
+//                      String name = iterator.next();  
+//  
+//                      if (name.contains(arg0)) {  
+//                          mFilteredArrayList.add(name);  
+//                      }  
+//               mListViewAdapter.changeList(mFilteredArrayList);  
+//               mListViewAdapter.notifyDataSetChanged();  
+            }  
+              
+        });  
+		
 		billCodeImg.setOnClickListener(this);
 	}
-
-	public  void onDestroy(){  
-		super.onDestroy();  
-		ListViewAdapter.searchContent="";  
-	}  
+	
+	 public  void onDestroy(){  
+         super.onDestroy();  
+         ListViewAdapter.searchContent="";  
+     }  
 
 	@Override
 	public void initData() {
@@ -212,7 +224,7 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 
 				stick_edt_package_code.setText(scanData.getPackBarcode());
 				stick_edt_package_number.setText(scanData.getPackNumber());
-				//								addData(null);
+//								addData(null);
 			}else{
 				stick_edt_package_code.setText(strBillcode);
 			}
@@ -272,7 +284,7 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 
 				stick_edt_package_code.setText(scanData.getPackBarcode());
 				stick_edt_package_number.setText(scanData.getPackNumber());
-				//									addData(null);
+//									addData(null);
 			} else {
 				stick_edt_package_code.setText(strBillcode);
 			}
@@ -334,8 +346,9 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 				mData.setScaned("1");
 				mData.setUploadStatus("0");
 
-				++scan_num;
 				mScandataDao.addData(mData);  //保存数据
+				
+				stick_scan_count.setText(++scan_num + " / " + scan_count_num);
 
 				CommandTools.showToast("保存成功");
 			}
@@ -343,11 +356,11 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 
 		commonAdapter.notifyDataSetChanged();
 
-		stick_scan_count.setText(scan_num + " / " + scan_num_sum);
+		stick_scan_count.setText(++scan_num + " / " + scan_count_num);
 		stick_edt_package_code.setText("");
 		stick_edt_package_number.setText("");
 		stick_pack_name.setText("");
-
+		
 	}
 
 	/**
@@ -361,8 +374,9 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 			public void callback(int res, String remark, Object object) {
 
 				ScanNumInfo info = (ScanNumInfo) object;
-				scan_num_sum = info.getMust_scan_number();
-				stick_scan_count.setText(scan_num + " / " + scan_num_sum + "");
+				scan_count_num = info.getMust_scan_number();
+				Log.i("hexiuhui--", info.getMust_scan_number() + "");
+				stick_scan_count.setText(scan_num + " / " + info.getMust_scan_number() + "");
 			}
 		});
 
@@ -427,7 +441,7 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 							}
 							dataList.addAll(list);
 							commonAdapter.notifyDataSetChanged();
-
+							
 							commonAdapter.changCopyList(dataList);
 
 							RFID.startRFID();
@@ -451,7 +465,7 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 		LoadTextNetTask task = UserService.getLand(userId, taskId, flag, listener, null);
 		return task;
 	}
-
+	
 	/**
 	 * 完成
 	 * @param v

@@ -99,9 +99,9 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 		billCodeImg = (RelativeLayout) findViewById(R.id.bill_code_img);
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-
+		
 		scan_num = dataList.size();
-
+		
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.land_item) {
 
 			@Override
@@ -383,6 +383,7 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 				VoiceHint.playErrorSounds();
 				CommandTools.showToast("条码不存在");
 			}
+			return;
 		}
 	}
 

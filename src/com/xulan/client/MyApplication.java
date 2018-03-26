@@ -70,7 +70,7 @@ public class MyApplication extends Application {
 	private static EventBus eventBus;
 	public static RequestQueue mRequestQueue;
 
-	public static int m_flag;//0-没有计划任务 1-禁止操作 2-有计划任务 3-没有计划任务，且当前节点下所有员工都没有计划任务
+	public static int m_flag;
 	public static int m_node_num = 0;//当前是否第一 节点，1，是，其它不是
 	public static int m_link_num = 0;//当前操作环节
 	public static int m_physic_link_num = 1;//操作环节，物理上的，这个是根据接口返回的
