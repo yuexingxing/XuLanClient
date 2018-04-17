@@ -711,248 +711,250 @@ public final class R {
         public static final int zouqi=0x7f05000c;
     }
     public static final class string {
-        public static final int Company_is_Closed=0x7f0900b7;
-        public static final int LiftCrane_vendor_is_required=0x7f0900b2;
-        public static final int PDA_User_is_not_Activate=0x7f0900b5;
-        public static final int Pack_vendor_is_required=0x7f0900b4;
-        public static final int Survey_vendor_is_required=0x7f0900b3;
-        public static final int Username_is_Expired=0x7f0900b6;
+        public static final int Company_is_Closed=0x7f0900b9;
+        public static final int LiftCrane_vendor_is_required=0x7f0900b4;
+        public static final int PDA_User_is_not_Activate=0x7f0900b7;
+        public static final int Pack_vendor_is_required=0x7f0900b6;
+        public static final int Survey_vendor_is_required=0x7f0900b5;
+        public static final int Username_is_Expired=0x7f0900b8;
         public static final int action_settings=0x7f090001;
-        public static final int aircargo=0x7f09007a;
+        public static final int aircargo=0x7f09007c;
         public static final int app_name=0x7f090000;
         /**  抵达 
  抵达 
          */
-        public static final int arrival=0x7f09003f;
-        public static final int assembled_tips=0x7f09003a;
-        public static final int assembly=0x7f090085;
-        public static final int authorized_person=0x7f090050;
-        public static final int backAll=0x7f09006c;
-        public static final int backToLogin=0x7f09006b;
+        public static final int arrival=0x7f090041;
+        public static final int assembled_tips=0x7f09003c;
+        public static final int assembly=0x7f090087;
+        public static final int authorized_person=0x7f090052;
+        public static final int backAll=0x7f09006e;
+        public static final int backToLogin=0x7f09006d;
         public static final int barcode=0x7f090014;
-        public static final int barcode_does_not_exist=0x7f0900b0;
-        public static final int barcode_is_required=0x7f0900af;
-        public static final int cancel=0x7f09006a;
+        public static final int barcode_does_not_exist=0x7f0900b2;
+        public static final int barcode_is_required=0x7f0900b1;
+        public static final int cancel=0x7f09006c;
         /**  铁运 
  铁运 
          */
         public static final int carriage_no=0x7f090019;
-        public static final int carriage_no_is_required=0x7f0900ab;
-        public static final int checker=0x7f09002d;
-        public static final int clean_data=0x7f09005b;
+        public static final int carriage_no_is_required=0x7f0900ad;
+        public static final int checker=0x7f09002f;
+        public static final int choose_company=0x7f090024;
+        public static final int clean_data=0x7f09005d;
         /**  集装箱 
  集装箱 
          */
         public static final int cntr_no=0x7f09001e;
-        public static final int code=0x7f090061;
-        public static final int code_not_null=0x7f090092;
-        public static final int commit_time=0x7f09008a;
-        public static final int conclusion=0x7f090028;
-        public static final int containercargo=0x7f09007b;
-        public static final int containercargo_1=0x7f09007c;
-        public static final int containercargo_2=0x7f09007d;
-        public static final int d_problem_is_required=0x7f0900ae;
+        public static final int code=0x7f090063;
+        public static final int code_not_null=0x7f090094;
+        public static final int commit_time=0x7f09008c;
+        public static final int company=0x7f09001f;
+        public static final int conclusion=0x7f09002a;
+        public static final int containercargo=0x7f09007d;
+        public static final int containercargo_1=0x7f09007e;
+        public static final int containercargo_2=0x7f09007f;
+        public static final int d_problem_is_required=0x7f0900b0;
         /**  *******  登录界面 ******** 
  *******  登录界面 ******** 
          */
         public static final int deivceID=0x7f090006;
-        public static final int diff=0x7f090030;
-        public static final int discharge=0x7f090074;
+        public static final int diff=0x7f090032;
+        public static final int discharge=0x7f090076;
         public static final int driver_phone=0x7f090018;
-        public static final int enterlibrary_table_admin=0x7f0900a2;
-        public static final int enterlibrary_table_barcode=0x7f0900a1;
-        public static final int enterlibrary_table_iden=0x7f0900a4;
-        public static final int enterlibrary_table_libs=0x7f0900a3;
-        public static final int exceptional_count=0x7f090052;
+        public static final int enterlibrary_table_admin=0x7f0900a4;
+        public static final int enterlibrary_table_barcode=0x7f0900a3;
+        public static final int enterlibrary_table_iden=0x7f0900a6;
+        public static final int enterlibrary_table_libs=0x7f0900a5;
+        public static final int exceptional_count=0x7f090054;
         /**  异常 
  异常 
          */
-        public static final int exceptional_mode=0x7f09004a;
-        public static final int exceptional_remarks=0x7f09004c;
+        public static final int exceptional_mode=0x7f09004c;
+        public static final int exceptional_remarks=0x7f09004e;
         /**  货场 
  货场 
          */
-        public static final int field_no=0x7f090021;
-        public static final int field_no_is_required=0x7f0900ac;
+        public static final int field_no=0x7f090022;
+        public static final int field_no_is_required=0x7f0900ae;
         /**  空运 
  空运 
          */
         public static final int flight=0x7f09001d;
-        public static final int generalcargo=0x7f090079;
-        public static final int goods_barcode=0x7f090057;
+        public static final int generalcargo=0x7f09007b;
+        public static final int goods_barcode=0x7f090059;
         /**  安装 
  安装 
          */
-        public static final int goods_code=0x7f090037;
-        public static final int goods_name=0x7f090039;
-        public static final int goods_no=0x7f090058;
-        public static final int goods_number=0x7f090038;
-        public static final int height=0x7f090046;
-        public static final int height_new=0x7f090033;
-        public static final int height_old=0x7f090036;
+        public static final int goods_code=0x7f090039;
+        public static final int goods_name=0x7f09003b;
+        public static final int goods_no=0x7f09005a;
+        public static final int goods_number=0x7f09003a;
+        public static final int height=0x7f090048;
+        public static final int height_new=0x7f090035;
+        public static final int height_old=0x7f090038;
         public static final int hello_world=0x7f090002;
         public static final int holds=0x7f09001c;
-        public static final int image_count=0x7f090088;
-        public static final int img_not_null=0x7f090093;
-        public static final int in=0x7f090080;
-        public static final int initial=0x7f09002f;
-        public static final int inland_service=0x7f090072;
-        public static final int keeper=0x7f090022;
-        public static final int lash_vendor_is_required=0x7f0900b1;
-        public static final int lashing_service=0x7f090082;
-        public static final int lashing_tips=0x7f090025;
+        public static final int image_count=0x7f09008a;
+        public static final int img_not_null=0x7f090095;
+        public static final int in=0x7f090082;
+        public static final int initial=0x7f090031;
+        public static final int inland_service=0x7f090074;
+        public static final int keeper=0x7f090023;
+        public static final int lash_vendor_is_required=0x7f0900b3;
+        public static final int lashing_service=0x7f090084;
+        public static final int lashing_tips=0x7f090027;
         /**  绑扎 
  绑扎 
          */
-        public static final int lashing_vendor=0x7f090023;
-        public static final int lenght=0x7f090044;
-        public static final int length_new=0x7f090031;
-        public static final int length_old=0x7f090034;
-        public static final int liftcrane_service=0x7f09007e;
-        public static final int load_count=0x7f09005f;
-        public static final int loading=0x7f090073;
+        public static final int lashing_vendor=0x7f090025;
+        public static final int lenght=0x7f090046;
+        public static final int length_new=0x7f090033;
+        public static final int length_old=0x7f090036;
+        public static final int liftcrane_service=0x7f090080;
+        public static final int load_count=0x7f090061;
+        public static final int loading=0x7f090075;
         public static final int login=0x7f09000c;
-        public static final int loging=0x7f09008c;
-        public static final int logistics_tips=0x7f090048;
-        public static final int mesurement=0x7f090084;
+        public static final int loging=0x7f09008e;
+        public static final int logistics_tips=0x7f09004a;
+        public static final int mesurement=0x7f090086;
         /**  打尺 
  打尺 
          */
-        public static final int mesurement_vendor=0x7f090029;
+        public static final int mesurement_vendor=0x7f09002b;
         /**  单件录入 
  单件录入 
          */
-        public static final int mode_step=0x7f090041;
-        public static final int monitor=0x7f09002b;
-        public static final int monitor_2=0x7f09002c;
-        public static final int msg_click_delete=0x7f0900a0;
+        public static final int mode_step=0x7f090043;
+        public static final int monitor=0x7f09002d;
+        public static final int monitor_2=0x7f09002e;
+        public static final int msg_click_delete=0x7f0900a2;
         public static final int msg_select_luyou=0x7f090010;
         public static final int msg_select_node=0x7f090012;
-        public static final int new_1=0x7f090075;
-        public static final int no=0x7f09008e;
-        public static final int no_2=0x7f090068;
-        public static final int off=0x7f09006f;
-        public static final int ok=0x7f090069;
-        public static final int out=0x7f090081;
-        public static final int pack_name=0x7f090043;
-        public static final int pack_tips=0x7f090089;
+        public static final int new_1=0x7f090077;
+        public static final int no=0x7f090090;
+        public static final int no_2=0x7f09006a;
+        public static final int off=0x7f090071;
+        public static final int ok=0x7f09006b;
+        public static final int out=0x7f090083;
+        public static final int pack_name=0x7f090045;
+        public static final int pack_tips=0x7f09008b;
         public static final int package_no=0x7f090015;
-        public static final int package_type=0x7f09003c;
-        public static final int package_vendor=0x7f09003d;
-        public static final int packages_count=0x7f090040;
-        public static final int packing_operation=0x7f090096;
-        public static final int packing_service=0x7f090087;
+        public static final int package_type=0x7f09003e;
+        public static final int package_vendor=0x7f09003f;
+        public static final int packages_count=0x7f090042;
+        public static final int packing_operation=0x7f090098;
+        public static final int packing_service=0x7f090089;
         public static final int password=0x7f090009;
-        public static final int photo=0x7f090049;
-        public static final int pic=0x7f090064;
-        public static final int problemcargo=0x7f090076;
-        public static final int produced=0x7f090086;
-        public static final int produced_tips=0x7f09003b;
+        public static final int photo=0x7f09004b;
+        public static final int pic=0x7f090066;
+        public static final int problemcargo=0x7f090078;
+        public static final int produced=0x7f090088;
+        public static final int produced_tips=0x7f09003d;
         /**  项目路由 
  项目路由 
          */
         public static final int project=0x7f09000e;
         public static final int project_name=0x7f09000f;
-        public static final int project_route=0x7f090090;
-        public static final int prompt=0x7f09008f;
-        public static final int railwaycargo=0x7f090078;
-        public static final int remarks=0x7f09005d;
+        public static final int project_route=0x7f090092;
+        public static final int prompt=0x7f090091;
+        public static final int railwaycargo=0x7f09007a;
+        public static final int remarks=0x7f09005f;
         public static final int rempassword=0x7f09000b;
         public static final int remuserName=0x7f09000a;
-        public static final int required=0x7f09005c;
-        public static final int return_cargo_count=0x7f090053;
+        public static final int required=0x7f09005e;
+        public static final int return_cargo_count=0x7f090055;
         /**  退运 
  退运 
          */
-        public static final int return_cargo_mode=0x7f09004d;
-        public static final int return_cargo_reason=0x7f09004f;
-        public static final int returncargo=0x7f090077;
-        public static final int returns=0x7f09006e;
-        public static final int save=0x7f090060;
-        public static final int scan_count=0x7f09005e;
-        public static final int scan_records=0x7f0900a8;
-        public static final int search=0x7f090055;
-        public static final int searching=0x7f0900a7;
-        public static final int select_exceptional=0x7f09004b;
-        public static final int select_from_album=0x7f09009d;
-        public static final int select_lashing_vendor=0x7f090024;
-        public static final int select_mesurement_vendor=0x7f09002a;
-        public static final int select_mode_step=0x7f090042;
-        public static final int select_package_vendor=0x7f09003e;
-        public static final int select_project=0x7f090091;
-        public static final int select_project_route_mode=0x7f0900a6;
-        public static final int select_return_cargo_mode=0x7f09004e;
-        public static final int select_survey_vendor=0x7f090027;
-        public static final int select_task=0x7f090063;
-        public static final int select_vendor=0x7f090020;
+        public static final int return_cargo_mode=0x7f09004f;
+        public static final int return_cargo_reason=0x7f090051;
+        public static final int returncargo=0x7f090079;
+        public static final int returns=0x7f090070;
+        public static final int save=0x7f090062;
+        public static final int scan_count=0x7f090060;
+        public static final int scan_records=0x7f0900aa;
+        public static final int search=0x7f090057;
+        public static final int searching=0x7f0900a9;
+        public static final int select_exceptional=0x7f09004d;
+        public static final int select_from_album=0x7f09009f;
+        public static final int select_lashing_vendor=0x7f090026;
+        public static final int select_mesurement_vendor=0x7f09002c;
+        public static final int select_mode_step=0x7f090044;
+        public static final int select_package_vendor=0x7f090040;
+        public static final int select_project=0x7f090093;
+        public static final int select_project_route_mode=0x7f0900a8;
+        public static final int select_return_cargo_mode=0x7f090050;
+        public static final int select_survey_vendor=0x7f090029;
+        public static final int select_task=0x7f090065;
+        public static final int select_vendor=0x7f090021;
         public static final int setting=0x7f09000d;
         /**  公用参数 
  公用参数 
          */
-        public static final int settings=0x7f090059;
+        public static final int settings=0x7f09005b;
         public static final int shift=0x7f090017;
         /**  查询 
  查询 
          */
-        public static final int solution=0x7f090051;
-        public static final int stack_digit=0x7f0900a5;
-        public static final int status=0x7f090056;
-        public static final int str_is_stop_scan=0x7f090099;
-        public static final int str_open_identify_pattern=0x7f09009a;
-        public static final int str_open_recognition_fail=0x7f09009b;
-        public static final int str_start_scan=0x7f090097;
-        public static final int str_stop_scan=0x7f090098;
-        public static final int str_stop_scanning_operation=0x7f09009c;
+        public static final int solution=0x7f090053;
+        public static final int stack_digit=0x7f0900a7;
+        public static final int status=0x7f090058;
+        public static final int str_is_stop_scan=0x7f09009b;
+        public static final int str_open_identify_pattern=0x7f09009c;
+        public static final int str_open_recognition_fail=0x7f09009d;
+        public static final int str_start_scan=0x7f090099;
+        public static final int str_stop_scan=0x7f09009a;
+        public static final int str_stop_scanning_operation=0x7f09009e;
         /**  陆运 
  陆运 
          */
         public static final int submit=0x7f090013;
-        public static final int survey_service=0x7f090083;
+        public static final int survey_service=0x7f090085;
         /**  检验 
  检验 
          */
-        public static final int survey_vendor=0x7f090026;
-        public static final int task_following=0x7f090071;
-        public static final int task_list=0x7f090095;
-        public static final int task_name=0x7f090062;
-        public static final int task_name_search=0x7f09006d;
-        public static final int task_not_null=0x7f090094;
+        public static final int survey_vendor=0x7f090028;
+        public static final int task_following=0x7f090073;
+        public static final int task_list=0x7f090097;
+        public static final int task_name=0x7f090064;
+        public static final int task_name_search=0x7f09006f;
+        public static final int task_not_null=0x7f090096;
         public static final int task_tt=0x7f090011;
-        public static final int tel=0x7f090065;
-        public static final int tiemai=0x7f0900b8;
-        public static final int title=0x7f090070;
+        public static final int tel=0x7f090067;
+        public static final int tiemai=0x7f0900ba;
+        public static final int title=0x7f090072;
         public static final int title_activity_base=0x7f090003;
         public static final int title_activity_lu_you=0x7f090004;
         public static final int title_activity_main_menu=0x7f090005;
-        public static final int title_activity_off_line_scan=0x7f09009f;
-        public static final int title_activity_strap_scan=0x7f09009e;
-        public static final int tractor_LIC_shift_is_required=0x7f0900a9;
+        public static final int title_activity_off_line_scan=0x7f0900a1;
+        public static final int title_activity_strap_scan=0x7f0900a0;
+        public static final int tractor_LIC_shift_is_required=0x7f0900ab;
         public static final int tractor_no=0x7f090016;
-        public static final int transityard_service=0x7f09007f;
-        public static final int u_p_not_null=0x7f09008b;
-        public static final int update_password=0x7f09005a;
-        public static final int update_time=0x7f090067;
-        public static final int updated=0x7f09002e;
-        public static final int upload_count=0x7f090054;
+        public static final int transityard_service=0x7f090081;
+        public static final int u_p_not_null=0x7f09008d;
+        public static final int update_password=0x7f09005c;
+        public static final int update_time=0x7f090069;
+        public static final int updated=0x7f090030;
+        public static final int upload_count=0x7f090056;
         public static final int userName=0x7f090008;
-        public static final int user_name=0x7f090066;
+        public static final int user_name=0x7f090068;
         /**  装卸 
  装卸 
          */
-        public static final int vendor=0x7f09001f;
-        public static final int vendor_is_required=0x7f0900ad;
+        public static final int vendor=0x7f090020;
+        public static final int vendor_is_required=0x7f0900af;
         public static final int versionID=0x7f090007;
         /**  海运 
  海运 
          */
         public static final int vessel_name=0x7f09001a;
-        public static final int vessel_voyage_holds_is_required=0x7f0900aa;
+        public static final int vessel_voyage_holds_is_required=0x7f0900ac;
         public static final int voyage=0x7f09001b;
-        public static final int weight=0x7f090047;
-        public static final int widht=0x7f090045;
-        public static final int width_new=0x7f090032;
-        public static final int width_old=0x7f090035;
-        public static final int yes=0x7f09008d;
+        public static final int weight=0x7f090049;
+        public static final int widht=0x7f090047;
+        public static final int width_new=0x7f090034;
+        public static final int width_old=0x7f090037;
+        public static final int yes=0x7f09008f;
     }
     public static final class style {
         public static final int AnimationFade=0x7f0a0003;

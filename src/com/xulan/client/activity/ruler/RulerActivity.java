@@ -221,20 +221,7 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 			String strBillcode = (String) msg.obj;
 			scale_edt_package_code.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if(scanData != null){
-
-				scale_edt_package_code.setText(scanData.getPackBarcode());
-				scale_edt_package_number.setText(scanData.getPackNumber());
-				scale_long.setText(scanData.getLength_Old());
-				scale_wide.setText(scanData.getWidth_Old());
-				scale_hight.setText(scanData.getHeight_Old());
-				scale_weight.setText(scanData.getWeight());
-				//				addData(null);
-			}else{
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 		}
 	}
 
@@ -294,21 +281,26 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if (scanData != null) {
-
-				scale_edt_package_code.setText(scanData.getPackBarcode());
-				scale_edt_package_number.setText(scanData.getPackNumber());
-				scale_long.setText(scanData.getLength_Old());
-				scale_wide.setText(scanData.getWidth_Old());
-				scale_hight.setText(scanData.getHeight_Old());
-				scale_weight.setText(scanData.getWeight());
-				//					addData(null);
-			} else {
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 			return;
+		}
+	}
+	
+	public void checkData(String billcode){
+
+		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		if (scanData != null) {
+
+			scale_edt_package_code.setText(scanData.getPackBarcode());
+			scale_edt_package_number.setText(scanData.getPackNumber());
+			scale_long.setText(scanData.getLength_Old());
+			scale_wide.setText(scanData.getWidth_Old());
+			scale_hight.setText(scanData.getHeight_Old());
+			scale_weight.setText(scanData.getWeight());
+			//					addData(null);
+		} else {
+			VoiceHint.playErrorSounds();
+			CommandTools.showToast("条码不存在");
 		}
 	}
 

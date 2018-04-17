@@ -64,7 +64,7 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 	@ViewInject(R.id.load_unload_edt_5) EditText edtPackageNumber;//包装号码
 	@ViewInject(R.id.load_count) EditText edtLoadCount;//载入数
 	@ViewInject(R.id.scan_count) EditText edtScanCount;//扫描数
-	
+
 	private RelativeLayout billCodeImg;
 
 	private CommonAdapter<ScanData> commonAdapter;
@@ -99,9 +99,9 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-		
+
 		scan_num = dataList.size();
-		
+
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.land_item) {
 
 			@Override
@@ -126,7 +126,7 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 				edtPackageNumber.setText(scanData.getPackNumber());
 			}
 		});
-		
+
 		billCodeImg.setOnClickListener(this);
 	}
 
@@ -148,19 +148,11 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 	public void onEventMainThread(Message msg) {
 
 		if(msg.what == Constant.SCAN_DATA){
+			
 			String strBillcode = (String) msg.obj;
 			edtPackageBarcode.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if(scanData != null){
-
-				edtPackageBarcode.setText(scanData.getPackBarcode());
-				edtPackageNumber.setText(scanData.getPackNumber());
-				addData(null);
-			}else{
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 		}
 	}
 
@@ -189,7 +181,7 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 			break;
 		}		
 	}
-	
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == Constant.SELECT_TASK && resultCode == RESULT_OK) {
 			scan_num = 0;
@@ -214,21 +206,26 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 			if (data == null) {
 				return;
 			}
-			
+
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
-			
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if (scanData != null) {
 
-				edtPackageBarcode.setText(scanData.getPackBarcode());
-				edtPackageNumber.setText(scanData.getPackNumber());
-				addData(null);
-			} else {
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 			return;
+		}
+	}
+
+	public void checkData(String billcode){
+
+		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		if (scanData != null) {
+
+			edtPackageBarcode.setText(scanData.getPackBarcode());
+			edtPackageNumber.setText(scanData.getPackNumber());
+			addData(null);
+		} else {
+			VoiceHint.playErrorSounds();
+			CommandTools.showToast("条码不存在");
 		}
 	}
 
@@ -287,7 +284,7 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 				data.setNode_id(MyApplication.m_nodeId);
 				data.setScaned("1");
 				data.setUploadStatus("0");
-				
+
 				mScandataDao.addData(data);  //保存数据
 			}
 		}
@@ -351,7 +348,7 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 							}
 							List<ScanData> notUploadDataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId, taskId);
 							dataList.addAll(notUploadDataList);
-							
+
 							//去除重复数据
 							for (int j = 0; j < list.size(); j++) {
 								for (int i = 0; i < dataList.size(); i++) {
@@ -475,7 +472,7 @@ public class LoadUnloadActivity extends BaseActivity implements OnClickListener 
 
 		DataUtilTools.sortByPackNo(dataList, commonAdapter);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onStop()
 	 */

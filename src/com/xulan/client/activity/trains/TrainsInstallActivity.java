@@ -101,9 +101,9 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-		
+
 		scan_num = dataList.size();
-		
+
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.land_item) {
 			@Override
 			public void convert(ViewHolder helper, ScanData item) {
@@ -140,7 +140,7 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 			requestGetShip(MyApplication.m_userID, taskId, 0);
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
 	 */
@@ -213,17 +213,22 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if (scanData != null) {
-
-				trains_edt_4.setText(scanData.getPackBarcode());
-				trains_edt_5.setText(scanData.getPackNumber());
-				addData(null);
-			} else {
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 			return;
+		}
+	}
+
+	public void checkData(String billcode){
+
+		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		if (scanData != null) {
+
+			trains_edt_4.setText(scanData.getPackBarcode());
+			trains_edt_5.setText(scanData.getPackNumber());
+			addData(null);
+		} else {
+			VoiceHint.playErrorSounds();
+			CommandTools.showToast("条码不存在");
 		}
 	}
 
@@ -356,7 +361,7 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 							}
 							List<ScanData> notUploadDataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId, taskId);
 							dataList.addAll(notUploadDataList);
-							
+
 							//去除重复数据
 							for (int j = 0; j < list.size(); j++) {
 								for (int i = 0; i < dataList.size(); i++) {

@@ -29,7 +29,7 @@
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/vendor"
+            android:text="@string/company"
             android:textColor="@color/black"
             android:textSize="13sp" />
 

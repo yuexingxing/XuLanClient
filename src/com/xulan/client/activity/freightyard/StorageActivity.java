@@ -65,7 +65,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 	private EditText edtPackageBarcode;
 	private EditText edtPackageNumber;
 	private EditText edtBj;
-	
+
 	private RelativeLayout billCodeImg;
 
 	private String taskId = "";
@@ -79,7 +79,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 	private EditText edtCount2;
 	private EditText edtCount3;
 	private EditText edtCount4;
-	
+
 	private ScanDataDao mScandataDao = new ScanDataDao();
 
 	@Override
@@ -106,9 +106,9 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-		
+
 		scan_num = dataList.size();
-		
+
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.land_item) {
 			@Override
 			public void convert(ViewHolder helper, ScanData item) {
@@ -120,14 +120,14 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 				helper.setText(R.id.land_tv5, item.getScanTime());
 			}
 		});
-		
+
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				ScanData scanData = dataList.get(arg2);
-				
+
 				edtPackageBarcode.setText(scanData.getPackBarcode());
 				edtPackageNumber.setText(scanData.getPackNumber());
 				edtStorageUser.setText(scanData.getDeiverPhone());
@@ -158,16 +158,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 			String strBillcode = (String) msg.obj;
 			edtPackageBarcode.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if(scanData != null){
-
-				edtPackageBarcode.setText(scanData.getPackBarcode());
-				edtPackageNumber.setText(scanData.getPackNumber());
-				addData(null);
-			}else{
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 		}
 	}
 
@@ -181,7 +172,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 		intent.putExtra("link_no", MyApplication.m_link_num + "");
 		startActivityForResult(intent, Constant.SELECT_TASK);
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -215,21 +206,26 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 			if (data == null) {
 				return;
 			}
-			
+
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
-			
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if (scanData != null) {
 
-				edtPackageBarcode.setText(scanData.getPackBarcode());
-				edtPackageNumber.setText(scanData.getPackNumber());
-				addData(null);
-			} else {
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 			return;
+		}
+	}
+
+	public void checkData(String billcode){
+
+		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		if (scanData != null) {
+
+			edtPackageBarcode.setText(scanData.getPackBarcode());
+			edtPackageNumber.setText(scanData.getPackNumber());
+			addData(null);
+		} else {
+			VoiceHint.playErrorSounds();
+			CommandTools.showToast("条码不存在");
 		}
 	}
 
@@ -292,7 +288,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 				data.setNode_id(MyApplication.m_nodeId);
 				data.setScaned("1");
 				data.setUploadStatus("0");
-				
+
 				mScandataDao.addData(data);  //保存数据
 				CommandTools.showToast("保存成功");
 			}
@@ -346,7 +342,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 								String pack_number = jsonObject.optString("Pack_No");
 								String pack_code = jsonObject.optString("Pack_BarCode");
 								String goods_id = jsonObject.optString("ID");
-								
+
 								String man = jsonObject.optString("man");
 								String memo = jsonObject.optString("memo");
 
@@ -362,7 +358,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 							}
 							List<ScanData> notUploadDataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId, taskId);
 							dataList.addAll(notUploadDataList);
-							
+
 							//去除重复数据
 							for (int j = 0; j < list.size(); j++) {
 								for (int i = 0; i < dataList.size(); i++) {
@@ -474,7 +470,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 
 		DataUtilTools.sortByPackNo(dataList, commonAdapter);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onStop()
 	 */

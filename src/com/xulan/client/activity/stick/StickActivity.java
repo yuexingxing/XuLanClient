@@ -219,15 +219,7 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 			String strBillcode = (String) msg.obj;
 			stick_edt_package_code.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if(scanData != null){
-
-				stick_edt_package_code.setText(scanData.getPackBarcode());
-				stick_edt_package_number.setText(scanData.getPackNumber());
-//								addData(null);
-			}else{
-				stick_edt_package_code.setText(strBillcode);
-			}
+			checkData(strBillcode);
 		}
 	}
 
@@ -279,16 +271,21 @@ public class StickActivity extends BaseActivity implements OnClickListener {
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if (scanData != null) {
-
-				stick_edt_package_code.setText(scanData.getPackBarcode());
-				stick_edt_package_number.setText(scanData.getPackNumber());
-//									addData(null);
-			} else {
-				stick_edt_package_code.setText(strBillcode);
-			}
+			checkData(strBillcode);
 			return;
+		}
+	}
+	
+	public void checkData(String billcode){
+		
+		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		if (scanData != null) {
+
+			stick_edt_package_code.setText(scanData.getPackBarcode());
+			stick_edt_package_number.setText(scanData.getPackNumber());
+//								addData(null);
+		} else {
+			stick_edt_package_code.setText(billcode);
 		}
 	}
 

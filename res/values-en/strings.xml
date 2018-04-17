@@ -54,6 +54,8 @@
     <!-- 货场 -->
     <string name="field_no">Field No</string>
     <string name="keeper">Keeper</string>
+    
+     <string name="choose_company">Choose Company</string>
 
     <!-- 绑扎 -->
     <string name="lashing_vendor">Vendor</string>
@@ -227,4 +229,6 @@
 	<string name="Company_is_Closed">Company ID is Closed</string>
 	
 	<string name="tiemai">贴  唛</string>
+	
+	 <string name="company">company</string>
 </resources>

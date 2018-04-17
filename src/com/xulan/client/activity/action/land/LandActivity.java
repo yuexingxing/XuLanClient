@@ -2,16 +2,13 @@ package com.xulan.client.activity.action.land;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -20,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.xulan.client.MyApplication;
@@ -99,9 +95,9 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 		billCodeImg = (RelativeLayout) findViewById(R.id.bill_code_img);
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-		
+
 		scan_num = dataList.size();
-		
+
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.land_item) {
 
 			@Override
@@ -146,20 +142,7 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 			String strBillcode = (String) msg.obj;
 			edtPackageBarcode.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if(scanData != null){
-
-				edtPackageBarcode.setText(scanData.getPackBarcode());
-				edtPackageNumber.setText(scanData.getPackNumber());
-
-				edtPhone.setText(scanData.getDeiverPhone());
-				edtRemark.setText(scanData.getMemo());
-
-				addData(null);
-			}else{
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 		}
 	}
 
@@ -256,6 +239,7 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 		if(MyApplication.m_link_num == 3){//第三个环节直接取任务列表名字
 			strTaskName = edtTaskName.getText().toString();
 		}else if(TextUtils.isEmpty(strCarNumber) || TextUtils.isEmpty(strCarCount)){
+			VoiceHint.playErrorSounds();
 			CommandTools.showToast(getResources().getString(R.string.tractor_LIC_shift_is_required));
 			return;
 		}
@@ -364,27 +348,33 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if (scanData != null) {
-
-				edtPackageBarcode.setText(scanData.getPackBarcode());
-				edtPackageNumber.setText(scanData.getPackNumber());
-
-				if(!TextUtils.isEmpty(scanData.getDeiverPhone())){
-					edtPhone.setText(scanData.getDeiverPhone());
-				}
-
-				if(!TextUtils.isEmpty(scanData.getMemo())){
-					edtRemark.setText(scanData.getMemo());
-				}
-
-				addData(null);
-			} else {
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 			return;
 		}
+	}
+
+	public void checkData(String billcode){
+
+		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		if (scanData != null) {
+
+			edtPackageBarcode.setText(scanData.getPackBarcode());
+			edtPackageNumber.setText(scanData.getPackNumber());
+
+			if(!TextUtils.isEmpty(scanData.getDeiverPhone())){
+				edtPhone.setText(scanData.getDeiverPhone());
+			}
+
+			if(!TextUtils.isEmpty(scanData.getMemo())){
+				edtRemark.setText(scanData.getMemo());
+			}
+
+			addData(null);
+		} else {
+			VoiceHint.playErrorSounds();
+			CommandTools.showToast("条码不存在");
+		}
+		
 	}
 
 	/**

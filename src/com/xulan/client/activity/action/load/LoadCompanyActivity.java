@@ -2,11 +2,9 @@ package com.xulan.client.activity.action.load;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,9 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.xulan.client.R;
@@ -52,8 +48,6 @@ public class LoadCompanyActivity extends BaseActivity {
 	private List<ScanData> dataList = new ArrayList<ScanData>();
 
 	@ViewInject(R.id.load_company_edt_search) EditText edtSearch;
-	
-	private TextView title_load_company_item_tv2;
 
 	@Override
 	protected void onBaseCreate(Bundle savedInstanceState) {
@@ -63,13 +57,7 @@ public class LoadCompanyActivity extends BaseActivity {
 
 	@Override
 	public void initView() {
-		title_load_company_item_tv2 = (TextView) findViewById(R.id.title_load_company_item_tv2);
-		
-		String type = getIntent().getStringExtra("type");
-		if (type.equals(Constant.SCAN_TYPE_VERIFY)) {
-			title_load_company_item_tv2.setText("检验公司");
-		}
-		
+
 		mListView = (ListView) findViewById(R.id.lv_public);
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.load_company_item) {
 
@@ -124,8 +112,19 @@ public class LoadCompanyActivity extends BaseActivity {
 	@Override
 	public void initData() {
 
-		setTitle(getResources().getString(R.string.vendor));
-
+		if(getIntent().getStringExtra("type").equals(Constant.SCAN_TYPE_PACK)){
+			setTitle(getResources().getString(R.string.package_vendor));
+		}else if(getIntent().getStringExtra("type").equals(Constant.SCAN_TYPE_LOAD)){
+			setTitle(getResources().getString(R.string.vendor));
+		}else if(getIntent().getStringExtra("type").equals(Constant.SCAN_TYPE_SCALE)){
+			setTitle(getResources().getString(R.string.mesurement_vendor));
+		}else if(getIntent().getStringExtra("type").equals(Constant.SCAN_TYPE_VERIFY)){
+			setTitle(getResources().getString(R.string.survey_vendor));
+		}else if(getIntent().getStringExtra("type").equals(Constant.SCAN_TYPE_STRAP)){
+			setTitle(getResources().getString(R.string.lashing_vendor));
+		}else{
+			setTitle(getResources().getString(R.string.choose_company));
+		}
 	}
 
 	/**

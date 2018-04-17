@@ -46,6 +46,8 @@
 
     <!-- 集装箱 -->
     <string name="cntr_no">集装箱号</string>
+    
+    <string name="company">公司</string>
 
     <!-- 装卸 -->
     <string name="vendor">装卸公司</string>
@@ -54,6 +56,7 @@
     <!-- 货场 -->
     <string name="field_no">库位号</string>
     <string name="keeper">库管员</string>
+    <string name="choose_company">选择公司</string>
 
     <!-- 绑扎 -->
     <string name="lashing_vendor">绑扎公司</string>
@@ -205,7 +208,6 @@
     <string name="enterlibrary_table_libs">库位</string>
     <string name="enterlibrary_table_iden">标识</string>
     <string name="stack_digit">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ-_*/</string>
-
     <string name="select_project_route_mode">请选择项目/路径/节点</string>
     <string name="searching">获取数据中...</string>
     <string name="scan_records">未录入数据</string>
@@ -216,16 +218,14 @@
     <string name="vendor_is_required">打尺公司不能为空</string>
     <string name="d_problem_is_required">异常描述不能为空</string>
     <string name="barcode_is_required">包装条码不能为空</string>
-  
     <string name="barcode_does_not_exist">条码不存在</string>
-	<string name="lash_vendor_is_required">绑扎公司不能为空</string>
-	<string name="LiftCrane_vendor_is_required">装卸公司不能为空</string>
-	<string name="Survey_vendor_is_required">检验公司不能为空</string>
-	<string name="Pack_vendor_is_required">检验公司不能为空</string>
-	<string name="PDA_User_is_not_Activate">PDA登录权限未开通</string>
-	<string name="Username_is_Expired">登录信息已过期</string>
-	<string name="Company_is_Closed">用户公司已停用</string>
-	
-	<string name="tiemai">贴  唛</string>
-	
+    <string name="lash_vendor_is_required">绑扎公司不能为空</string>
+    <string name="LiftCrane_vendor_is_required">装卸公司不能为空</string>
+    <string name="Survey_vendor_is_required">检验公司不能为空</string>
+    <string name="Pack_vendor_is_required">检验公司不能为空</string>
+    <string name="PDA_User_is_not_Activate">PDA登录权限未开通</string>
+    <string name="Username_is_Expired">登录信息已过期</string>
+    <string name="Company_is_Closed">用户公司已停用</string>
+    <string name="tiemai">贴  唛</string>
+
 </resources>

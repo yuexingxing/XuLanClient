@@ -143,17 +143,7 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 		if(msg.what == Constant.SCAN_DATA){
 			String strBillcode = (String) msg.obj;
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if(scanData != null){
-
-				install_goos_code.setText(scanData.getPackBarcode());
-				install_goods_number.setText(scanData.getPackNumber());
-				install_goods_name.setText(scanData.getGoodsName());
-				addData(null);
-			}else{
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 		}
 	}
 	
@@ -205,19 +195,24 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-			if (scanData != null) {
-
-				install_goos_code.setText(scanData.getPackBarcode());
-				install_goods_number.setText(scanData.getPackNumber());
-				install_goods_name.setText(scanData.getGoodsName());
-				
-				addData(null);
-			} else {
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 			return;
+		}
+	}
+	
+	public void checkData(String billcode){
+
+		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		if (scanData != null) {
+
+			install_goos_code.setText(scanData.getPackBarcode());
+			install_goods_number.setText(scanData.getPackNumber());
+			install_goods_name.setText(scanData.getGoodsName());
+			
+			addData(null);
+		} else {
+			VoiceHint.playErrorSounds();
+			CommandTools.showToast("条码不存在");
 		}
 	}
 
