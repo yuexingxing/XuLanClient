@@ -9,10 +9,13 @@ import com.xulan.client.pdascan.RFID;
 import com.xulan.client.util.Constant;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -52,6 +55,11 @@ public abstract class BaseActivity extends Activity {
 		MyApplication.getInstance().addActivity(this);
 		layoutBody = (LinearLayout) findViewById(R.id.baseAct_body);
 
+		if(mEventBus == null) {
+			mEventBus = EventBus.getDefault();
+			mEventBus.register(this);
+		}
+
 		onBaseCreate(savedInstanceState);
 		findViewById();
 		initView();
@@ -72,11 +80,6 @@ public abstract class BaseActivity extends Activity {
 	}
 
 	private void findViewById() {
-
-		if(mEventBus == null) {
-			mEventBus = EventBus.getDefault();
-			mEventBus.register(this);
-		}
 
 		tvLeft = (TextView) findViewById(R.id.tv_item_left);
 		tvTitle = (TextView) findViewById(R.id.tv_item_center);
@@ -159,6 +162,8 @@ public abstract class BaseActivity extends Activity {
 	}
 
 	public void back(View v){
+
+		MyApplication.getEventBus().unregister(this);
 		finish();
 	}
 
@@ -193,9 +198,17 @@ public abstract class BaseActivity extends Activity {
 	public void onDestory(){
 		super.onDestroy();
 
-		if(MyApplication.getEventBus() != null){
-			MyApplication.getEventBus().unregister(this);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if (keyCode == KeyEvent.KEYCODE_BACK) { // 获取 back键
+
+			back(null);
 		}
+		
+		return false;
 	}
 
 }

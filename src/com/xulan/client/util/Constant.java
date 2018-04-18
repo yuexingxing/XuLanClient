@@ -57,7 +57,9 @@ public class Constant {
 	public static String SCAN_TYPE_STRAP = "strap"; //绑扎
 	public static String SCAN_TYPE_OFFLINE = "offline"; //下线
 	public static String SCAN_TYPE_INSTALL = "install"; //安装
-	public static String SCAN_TYPE_TIEMAI = "stick"; //安装
+	public static String SCAN_TYPE_TIEMAI = "stick"; //贴唛
+	
+	public static String SCAN_TYPE_MENU = "menu"; //菜单栏
 
 	public static String SP_LOGIN_NAME = "SP_LOGIN_NAME";
 	public static String SP_LOGIN_PWD = "SP_LOGIN_PWD";

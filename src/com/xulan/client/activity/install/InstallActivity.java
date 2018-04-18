@@ -29,6 +29,7 @@ import com.xulan.client.adapter.CommonAdapter;
 import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.data.ScanNumInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
@@ -79,6 +80,7 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 	protected void onBaseCreate(Bundle savedInstanceState) {
 		setContentViewId(R.layout.activity_install_scan, this);
 		ViewUtils.inject(this);
+		
 	}
 
 	@Override
@@ -94,9 +96,9 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-		
+
 		scan_num = dataList.size();
-		
+
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.dobox_item) {
 			@Override
 			public void convert(ViewHolder helper, ScanData item) {
@@ -134,19 +136,17 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
-	 */
-	@Override
 	public void onEventMainThread(Message msg) {
-		
-		if(msg.what == Constant.SCAN_DATA){
-			String strBillcode = (String) msg.obj;
+
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_INSTALL)){
+
+			String strBillcode = scanInfo.getBarcode();
 
 			checkData(strBillcode);
 		}
 	}
-	
+
 	/**
 	 * 任务名称选择
 	 * @param v
@@ -199,16 +199,16 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 	}
-	
+
 	public void checkData(String billcode){
 
-		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_INSTALL, billcode, dataList);
 		if (scanData != null) {
 
 			install_goos_code.setText(scanData.getPackBarcode());
 			install_goods_number.setText(scanData.getPackNumber());
 			install_goods_name.setText(scanData.getGoodsName());
-			
+
 			addData(null);
 		} else {
 			VoiceHint.playErrorSounds();
@@ -279,7 +279,7 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private int scan_count_num = 0;
-	
+
 	/**
 	 * 获取海运信息
 	 */
@@ -293,7 +293,7 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 				ScanNumInfo info = (ScanNumInfo) object;
 
 				scan_count_num = info.getMust_scan_number();
-				
+
 				install_count.setText(scan_num + " / " + info.getMust_scan_number());
 			}
 		});
@@ -314,6 +314,7 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 						if (success == 0) {
 							JSONArray jsonArray = jsonObj.getJSONArray("data");
 							dataList.clear();
+							uploadList.clear();
 							List<ScanData> list = new ArrayList<ScanData>();
 							for (int i = 0; i < jsonArray.length(); i++) {
 								JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -333,7 +334,7 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 							}
 							List<ScanData> notUploadDataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId, taskId);
 							dataList.addAll(notUploadDataList);
-							
+
 							//去除重复数据
 							for (int j = 0; j < list.size(); j++) {
 								for (int i = 0; i < dataList.size(); i++) {
@@ -452,5 +453,12 @@ public class InstallActivity extends BaseActivity implements OnClickListener {
 		super.onStop();
 
 		RFID.stopRFID();
+	}
+
+	public void onDestory(){
+		super.onDestory();
+
+		dataList.clear();
+		uploadList.clear();
 	}
 }

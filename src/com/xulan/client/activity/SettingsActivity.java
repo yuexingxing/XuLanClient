@@ -11,6 +11,8 @@ import android.widget.Button;
 import com.lidroid.xutils.ViewUtils;
 import com.xulan.client.MyApplication;
 import com.xulan.client.R;
+import com.xulan.client.db.dao.ScanDataDao;
+import com.xulan.client.util.CommandTools;
 import com.xulan.client.util.DataCleanManager;
 
 /** 
@@ -57,7 +59,9 @@ public class SettingsActivity extends BaseActivity implements OnClickListener{
 			.setPositiveButton(getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					DataCleanManager.cleanApplicationData(SettingsActivity.this);
+//					DataCleanManager.cleanApplicationData(SettingsActivity.this);
+					new ScanDataDao().clearTable();
+					CommandTools.showToast("清除成功");
 					MyApplication.finishAllActivities();
 					finish();
 					

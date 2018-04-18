@@ -179,25 +179,21 @@ public class DataUtilTools {
 	 * @param dataList
 	 * @return
 	 */
-	public static ScanData checkScanData(String barcode, List<ScanData> dataList){
-
-		ScanData scanData = null;
+	public static ScanData checkScanData(String scanType, String barcode, List<ScanData> dataList){
 
 		int len = dataList.size();
 		for(int i=0; i<len; i++){
 
 			ScanData mScanData = dataList.get(i);
-			Log.v("result", barcode + "/" + mScanData.getPackBarcode().toString());
-			Log.v("result", barcode.length() + "/" + mScanData.getPackBarcode().toString().length());
+			Log.v("result", scanType + "---" + i + "---" + barcode + "/" + mScanData.getPackBarcode().toString());
 
 			//第二个判断是针对包装分单号
-			if(mScanData.getPackBarcode().toString().equals(barcode) || mScanData.getMinutePackBarcode().toString().equals(barcode)){
-				scanData = mScanData;
-				break;
+			if(mScanData.getPackBarcode().equals(barcode) || mScanData.getMinutePackBarcode().equals(barcode)){
+				return mScanData;
 			}
 		}
 
-		return scanData;
+		return null;
 	} 
 
 	/**

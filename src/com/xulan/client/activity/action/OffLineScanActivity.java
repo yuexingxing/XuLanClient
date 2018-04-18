@@ -139,16 +139,12 @@ public class OffLineScanActivity extends BaseActivity implements OnClickListener
 		setRightTitle(getResources().getString(R.string.submit));
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
-	 */
-	@Override
 	public void onEventMainThread(Message msg) {
 		if(msg.what == Constant.SCAN_DATA){
 			String strBillcode = (String) msg.obj;
 			edtPackBarcode.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
+			ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_OFFLINE, strBillcode, dataList);
 			if(scanData != null){
 
 				edtPackBarcode.setText(scanData.getPackBarcode());
@@ -207,7 +203,7 @@ public class OffLineScanActivity extends BaseActivity implements OnClickListener
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 			
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
+			ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_OFFLINE, strBillcode, dataList);
 			if (scanData != null) {
 
 				edtPackBarcode.setText(scanData.getPackBarcode());

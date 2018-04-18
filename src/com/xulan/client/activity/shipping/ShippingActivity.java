@@ -31,6 +31,7 @@ import com.xulan.client.adapter.CommonAdapter;
 import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.data.ScanNumInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
@@ -149,22 +150,16 @@ public class ShippingActivity extends BaseActivity implements OnClickListener {
 		setRightTitle(getResources().getString(R.string.submit));
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
-	 */
-	@Override
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
-			String strBillcode = (String) msg.obj;
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_SEA)){
+
+			String strBillcode = scanInfo.getBarcode();
 			edtPackageBarcode.setText(strBillcode);
 
 			checkData(strBillcode);
 		}
-	}
-
-	public void checkScanData(){
-
 	}
 
 	/**
@@ -226,7 +221,7 @@ public class ShippingActivity extends BaseActivity implements OnClickListener {
 
 	public void checkData(String billcode){
 
-		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_SEA, billcode, dataList);
 		if (scanData != null) {
 
 			edtPackageBarcode.setText(scanData.getPackBarcode());
@@ -279,10 +274,10 @@ public class ShippingActivity extends BaseActivity implements OnClickListener {
 			if (data.getPackBarcode().equals(strPackageBarcode) && data.getScaned().equals("1")) {
 				VoiceHint.playErrorSounds();
 				CommandTools.showToast("条码已扫描");
-				return;
+				break;
 			}
 
-			if (data.getPackNumber().equals(edtPackageNumber.getText().toString())) {
+			if (data.getPackBarcode().equals(strPackageBarcode)) {
 
 				data.setTaskName(strTaskName);
 				data.setTaskId(taskId);
@@ -300,14 +295,16 @@ public class ShippingActivity extends BaseActivity implements OnClickListener {
 
 				mScandataDao.addData(data);  //保存数据
 				CommandTools.showToast("保存成功");
+
+				commonAdapter.notifyDataSetChanged();
+
+				edtCount1.setText(++scan_num + "");
+				edtPackageBarcode.setText("");
+				edtPackageNumber.setText("");
+				break;
 			}
 		}
 
-		commonAdapter.notifyDataSetChanged();
-
-		edtCount1.setText(++scan_num + "");
-		edtPackageBarcode.setText("");
-		edtPackageNumber.setText("");
 	}
 
 	/**
@@ -345,6 +342,7 @@ public class ShippingActivity extends BaseActivity implements OnClickListener {
 						if (success == 0) {
 							JSONArray jsonArray = jsonObj.getJSONArray("data");
 							dataList.clear();
+							uploadList.clear();
 							List<ScanData> list = new ArrayList<ScanData>();
 							for (int i = 0; i < jsonArray.length(); i++) {
 								JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -482,5 +480,12 @@ public class ShippingActivity extends BaseActivity implements OnClickListener {
 		super.onStop();
 
 		RFID.stopRFID();
+	}
+
+	public void onDestory(){
+		super.onDestory();
+
+		dataList.clear();
+		uploadList.clear();
 	}
 }

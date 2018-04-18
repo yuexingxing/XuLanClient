@@ -131,7 +131,6 @@ public class SingleScanActivity extends BaseActivity{
 		PostTools.getLink(mContext, linkList);
 	}
 
-	@Override
 	public void onEventMainThread(Message msg) {
 		if(msg.what == Constant.SCAN_DATA) {
 			String strBillcode = (String) msg.obj;

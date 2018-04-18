@@ -202,7 +202,7 @@ public class InqueryActivity extends BaseActivity implements OnClickListener {
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
+			ScanData scanData = DataUtilTools.checkScanData("查询", strBillcode, dataList);
 			if (scanData != null) {
 
 				edtBarcode.setText(scanData.getPackBarcode());

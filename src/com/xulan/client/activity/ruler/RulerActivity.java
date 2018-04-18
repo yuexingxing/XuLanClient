@@ -39,6 +39,7 @@ import com.xulan.client.adapter.CommonAdapter;
 import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.data.ScanNumInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
@@ -104,28 +105,28 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 
 		requestGetWXURL();
 	}
-	
+
 	private Bitmap generateBitmap(String content,int width, int height) {  
-	    QRCodeWriter qrCodeWriter = new QRCodeWriter();  
-	    Map<EncodeHintType, String> hints = new HashMap();  
-	    hints.put(EncodeHintType.CHARACTER_SET, "utf-8");  
-	    try {  
-	        BitMatrix encode = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);  
-	        int[] pixels = new int[width * height];  
-	        for (int i = 0; i < height; i++) {  
-	            for (int j = 0; j < width; j++) {  
-	                if (encode.get(j, i)) {  
-	                    pixels[i * width + j] = 0x00000000;  
-	                } else {  
-	                    pixels[i * width + j] = 0xffffffff;  
-	                }  
-	            }  
-	        }  
-	        return Bitmap.createBitmap(pixels, 0, width, width, height, Bitmap.Config.RGB_565);  
-	    } catch (WriterException e) {  
-	        e.printStackTrace();  
-	    }  
-	    return null;  
+		QRCodeWriter qrCodeWriter = new QRCodeWriter();  
+		Map<EncodeHintType, String> hints = new HashMap();  
+		hints.put(EncodeHintType.CHARACTER_SET, "utf-8");  
+		try {  
+			BitMatrix encode = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, width, height, hints);  
+			int[] pixels = new int[width * height];  
+			for (int i = 0; i < height; i++) {  
+				for (int j = 0; j < width; j++) {  
+					if (encode.get(j, i)) {  
+						pixels[i * width + j] = 0x00000000;  
+					} else {  
+						pixels[i * width + j] = 0xffffffff;  
+					}  
+				}  
+			}  
+			return Bitmap.createBitmap(pixels, 0, width, width, height, Bitmap.Config.RGB_565);  
+		} catch (WriterException e) {  
+			e.printStackTrace();  
+		}  
+		return null;  
 	}  
 
 	@Override
@@ -147,9 +148,9 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-		
+
 		scan_num = dataList.size();
-		
+
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.ruler_item) {
 
 			@Override
@@ -186,17 +187,17 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 		});
 
 		billCodeImg.setOnClickListener(this);
-		
+
 		addPcode.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				Bitmap bitmap = generateBitmap(wxUrl, 400, 400);
-		        CustomPopDialog.Builder dialogBuild = new CustomPopDialog.Builder(RulerActivity.this);
-		        dialogBuild.setImage(bitmap);
-		        CustomPopDialog dialog = dialogBuild.create();
-		        dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
-		        dialog.show();
+				CustomPopDialog.Builder dialogBuild = new CustomPopDialog.Builder(RulerActivity.this);
+				dialogBuild.setImage(bitmap);
+				CustomPopDialog dialog = dialogBuild.create();
+				dialog.setCanceledOnTouchOutside(true);// 点击外部区域关闭
+				dialog.show();
 			}
 		});
 	}
@@ -211,14 +212,12 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
-	 */
-	@Override
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
-			String strBillcode = (String) msg.obj;
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_SCALE)){
+
+			String strBillcode = scanInfo.getBarcode();
 			scale_edt_package_code.setText(strBillcode);
 
 			checkData(strBillcode);
@@ -285,10 +284,10 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 	}
-	
+
 	public void checkData(String billcode){
 
-		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_SCALE, billcode, dataList);
 		if (scanData != null) {
 
 			scale_edt_package_code.setText(scanData.getPackBarcode());
@@ -413,7 +412,7 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 				scanData.setUploadStatus("0");
 
 				mScandataDao.addData(scanData);  //保存数据
-				
+
 				scale_scan_count.setText(++scan_num + " / " + scan_count_num);
 
 				Intent intent = new Intent(RulerActivity.this, ContrastActivity.class);
@@ -424,7 +423,7 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 
-		
+
 	}
 
 	/**
@@ -446,7 +445,7 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 
 		scale_edt_package_code.setText("");
 		scale_edt_package_number.setText("");
-//		scale_scan_count.setText(scan_num + " / " + scan_count_num + "");
+		//		scale_scan_count.setText(scan_num + " / " + scan_count_num + "");
 	}
 
 	/**
@@ -481,6 +480,7 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 						if (success == 0) {
 							JSONArray jsonArray = jsonObj.getJSONArray("data");
 							dataList.clear();
+							uploadList.clear();
 							List<ScanData> list = new ArrayList<ScanData>();
 							for (int i = 0; i < jsonArray.length(); i++) {
 								JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -546,9 +546,9 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 		LoadTextNetTask task = UserService.getLand(userId, taskId, flag, listener, null);
 		return task;
 	}
-	
+
 	String wxUrl = "";
-	
+
 	/**
 	 * 获取海运信息
 	 */
@@ -696,5 +696,12 @@ public class RulerActivity extends BaseActivity implements OnClickListener {
 		super.onStop();
 
 		RFID.stopRFID();
+	}
+
+	public void onDestory(){
+		super.onDestory();
+
+		dataList.clear();
+		uploadList.clear();
 	}
 }

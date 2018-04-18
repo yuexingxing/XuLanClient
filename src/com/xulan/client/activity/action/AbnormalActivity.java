@@ -168,7 +168,6 @@ public class AbnormalActivity extends BaseActivity implements OnClickListener {
 		PostTools.getLink(mContext, linkList);
 	}
 
-	@Override
 	public void onEventMainThread(Message msg) {
 
 		if(msg.what == Constant.SCAN_DATA){

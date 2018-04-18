@@ -261,12 +261,14 @@ public class TaskListActivity extends BaseActivity {
 		hidenRightMenu();
 	}
 
-	@Override
+	/* (non-Javadoc)
+	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
+	 */
 	public void onEventMainThread(Message msg) {
 
 		if(msg.what == Constant.SCAN_DATA){
 
-			String strBillcode = (String) msg.obj;
+//			String strBillcode = (String) msg.obj;
 		}
 	}
 

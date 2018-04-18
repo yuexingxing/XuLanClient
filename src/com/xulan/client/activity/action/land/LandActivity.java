@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ import com.xulan.client.adapter.CommonAdapter;
 import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
 import com.xulan.client.net.AsyncNetTask.OnPostExecuteListener;
@@ -40,6 +42,7 @@ import com.xulan.client.util.Constant;
 import com.xulan.client.util.DataUtilTools;
 import com.xulan.client.util.HandleDataTools;
 import com.xulan.client.util.Logs;
+import com.xulan.client.util.ToolUtils;
 import com.xulan.client.util.VoiceHint;
 import com.xulan.client.view.CustomProgress;
 
@@ -84,6 +87,7 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 	protected void onBaseCreate(Bundle savedInstanceState) {
 		setContentViewId(R.layout.activity_land, this);
 		ViewUtils.inject(this);
+		Log.v("zd", "land---onBaseCreate");
 
 		if(MyApplication.m_flag == 0 && HandleDataTools.getFirstLinkNum() == MyApplication.m_physic_link_num){
 			requestGetLand(MyApplication.m_userID, taskId, 0);
@@ -92,6 +96,7 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void initView() {
+
 		billCodeImg = (RelativeLayout) findViewById(R.id.bill_code_img);
 		//本地数据
 		dataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
@@ -135,11 +140,17 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 		setRightTitle(getResources().getString(R.string.submit));
 	}
 
-	@Override
+	public void onResume(){
+		super.onResume();
+
+	}
+
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
-			String strBillcode = (String) msg.obj;
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_LAND)){
+
+			String strBillcode = scanInfo.getBarcode();
 			edtPackageBarcode.setText(strBillcode);
 
 			checkData(strBillcode);
@@ -169,6 +180,7 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 							JSONArray jsonArray = jsonObj.getJSONArray("data");
 
 							dataList.clear();
+							uploadList.clear();
 
 							List<ScanData> list = new ArrayList<ScanData>();
 							for (int i = 0; i < jsonArray.length(); i++) {
@@ -232,6 +244,7 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 	 */
 	public void addData(View v){
 
+		Log.v("test", "addData");
 		String strCarNumber = edtCarNumber.getText().toString();
 		String strCarCount = edtCarCount.getText().toString();
 
@@ -265,11 +278,10 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 
 			if (data.getPackBarcode().equals(strPackageBarcode) && data.getScaned().equals("1")) {
 				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码已扫描");
-				return;
-			}
-
-			if (data.getPackNumber().equals(strPackageNumber)) {
+				//				CommandTools.showToast("条码已扫描");
+				Toast.makeText(this, "条码已扫描", Toast.LENGTH_LONG).show();
+				break;
+			}else if (data.getPackBarcode().equals(strPackageBarcode)) {
 
 				data.setTaskName(strTaskName);
 
@@ -291,16 +303,19 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 				data.setLinkMan(link_man);
 				data.setLinkPhone(link_phone);
 
-				mScandataDao.addData(data);  //保存数据
-				CommandTools.showToast("保存成功");
+				mScandataDao.addData(data);//保存数据
+				//				CommandTools.showToast("保存成功");
+				Toast.makeText(this, "保存成功", Toast.LENGTH_LONG).show();
+
+				commonAdapter.notifyDataSetChanged();
+
+				edtCount1.setText(++scan_num + "");
+				edtPackageBarcode.setText("");
+				edtPackageNumber.setText("");
+				break;
 			}
 		}
 
-		commonAdapter.notifyDataSetChanged();
-
-		edtCount1.setText(++scan_num + "");
-		edtPackageBarcode.setText("");
-		edtPackageNumber.setText("");
 	}
 
 	@Override
@@ -355,7 +370,8 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 
 	public void checkData(String billcode){
 
-		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		Log.v("test", "checkData" + billcode);
+		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_LAND, billcode, dataList);
 		if (scanData != null) {
 
 			edtPackageBarcode.setText(scanData.getPackBarcode());
@@ -374,7 +390,7 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 			VoiceHint.playErrorSounds();
 			CommandTools.showToast("条码不存在");
 		}
-		
+
 	}
 
 	/**
@@ -466,11 +482,6 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 		DataUtilTools.sortByPackNo(dataList, commonAdapter);
 	}
 
-	public void onResume(){
-		super.onResume();
-
-	}
-
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onStop()
 	 */
@@ -479,4 +490,16 @@ public class LandActivity extends BaseActivity implements OnClickListener {
 
 		RFID.stopRFID();
 	}
+
+	/* (non-Javadoc)
+	 * @see com.xulan.client.activity.BaseActivity#onDestory()
+	 */
+	public void onDestory(){
+		super.onDestory();
+		Log.v("zd", "land---onDestory");
+
+		dataList.clear();
+		uploadList.clear();
+	}
+
 }

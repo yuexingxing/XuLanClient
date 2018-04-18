@@ -198,7 +198,6 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 		}
 	}
 
-	@Override
 	public void onEventMainThread(Message msg) {
 
 		if(msg.what == Constant.SCAN_DATA){

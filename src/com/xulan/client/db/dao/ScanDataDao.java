@@ -210,7 +210,7 @@ public class ScanDataDao {
 	/**
 	 * 修改上传状态
 	 */
-	public boolean updateUploadState(List<ScanData> list) {
+	public boolean updateUploadState1(List<ScanData> list) {
 
 		ContentValues values = new ContentValues();
 		values.put(DBHelper.KEY_UploadStatus, "1");
@@ -227,6 +227,24 @@ public class ScanDataDao {
 					new String[] { scanData.getCacheId(),
 							scanData.getUploadStatus() });
 		}
+		return b > 0;
+	}
+
+	public boolean updateUploadState(List<ScanData> list) {
+
+		db = DBHelper.SQLiteDBHelper.getWritableDatabase();
+		int b = 0;
+		for (int i = 0; i < list.size(); i++) {
+			ScanData scanData = list.get(i);
+			String whereClause = DBHelper.KEY_CacheID + "=?";
+
+			b = db.delete(
+					DBHelper.TABLE_SCANDATA, 
+					whereClause, 
+					new String[] { scanData.getCacheId()}
+					);
+		}
+		
 		return b > 0;
 	}
 
@@ -287,13 +305,13 @@ public class ScanDataDao {
 		Cursor cursor = db.rawQuery(sql, null);
 
 		list = getCursorData(cursor);
-//		if (cursor != null) {
-//			cursor.close();
-//		}
+		//		if (cursor != null) {
+		//			cursor.close();
+		//		}
 
 		return list;
 	}
-	
+
 	/**
 	 * 根据扫描类型获取未上传数据 返回List
 	 * 
@@ -316,7 +334,7 @@ public class ScanDataDao {
 
 		return list;
 	}
-	
+
 	/**
 	 * 根据扫描类型获，任务id，取未上传数据 返回List
 	 * 

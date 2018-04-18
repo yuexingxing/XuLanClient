@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -30,6 +31,7 @@ import com.xulan.client.adapter.CommonAdapter;
 import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.data.ScanNumInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
@@ -45,6 +47,7 @@ import com.xulan.client.util.DataUtilTools;
 import com.xulan.client.util.HandleDataTools;
 import com.xulan.client.util.Logs;
 import com.xulan.client.util.PostTools;
+import com.xulan.client.util.ToolUtils;
 import com.xulan.client.util.PostTools.ObjectCallback;
 import com.xulan.client.util.VoiceHint;
 import com.xulan.client.view.CustomProgress;
@@ -86,10 +89,12 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 	protected void onBaseCreate(Bundle savedInstanceState) {
 		setContentViewId(R.layout.activity_storage_scan, this);
 		ViewUtils.inject(this);
+
 	}
 
 	@Override
 	public void initView() {
+
 		billCodeImg = (RelativeLayout) findViewById(R.id.bill_code_img);
 		mListView = (ListView) findViewById(R.id.lv_public);
 		edtTaskName = (TextView) findViewById(R.id.storage_edt_taskname);
@@ -148,14 +153,12 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
-	 */
-	@Override
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
-			String strBillcode = (String) msg.obj;
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_STORAGE)){
+
+			String strBillcode = scanInfo.getBarcode();
 			edtPackageBarcode.setText(strBillcode);
 
 			checkData(strBillcode);
@@ -217,7 +220,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 
 	public void checkData(String billcode){
 
-		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_STORAGE, billcode, dataList);
 		if (scanData != null) {
 
 			edtPackageBarcode.setText(scanData.getPackBarcode());
@@ -243,6 +246,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 		}
 
 		if (strTaskName.equals("")) {
+			VoiceHint.playErrorSounds();
 			CommandTools.showToast(getResources().getString(R.string.field_no_is_required));
 			return;
 		}
@@ -270,10 +274,8 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 			if (data.getPackBarcode().equals(strPackageBarcode) && data.getScaned().equals("1")) {
 				VoiceHint.playErrorSounds();
 				CommandTools.showToast("条码已扫描");
-				return;
-			}
-
-			if (data.getPackNumber().equals(strPackageNumber)) {
+				break;
+			}else if (data.getPackBarcode().equals(strPackageBarcode)) {
 
 				data.setTaskName(strTaskName);
 				data.setTaskId(taskId);
@@ -291,14 +293,16 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 
 				mScandataDao.addData(data);  //保存数据
 				CommandTools.showToast("保存成功");
+
+				commonAdapter.notifyDataSetChanged();
+
+				edtCount1.setText(++scan_num + "");
+				edtPackageBarcode.setText("");
+				edtPackageNumber.setText("");
+				break;
 			}
 		}
 
-		commonAdapter.notifyDataSetChanged();
-
-		edtCount1.setText(++scan_num + "");
-		edtPackageBarcode.setText("");
-		edtPackageNumber.setText("");
 	}
 
 	/**
@@ -336,6 +340,7 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 						if (success == 0) {
 							JSONArray jsonArray = jsonObj.getJSONArray("data");
 							dataList.clear();
+							uploadList.clear();
 							List<ScanData> list = new ArrayList<ScanData>();
 							for (int i = 0; i < jsonArray.length(); i++) {
 								JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -478,5 +483,12 @@ public class StorageActivity extends BaseActivity implements OnClickListener {
 		super.onStop();
 
 		RFID.stopRFID();
+	}
+
+	public void onDestory(){
+		super.onDestory();
+
+		dataList.clear();
+		uploadList.clear();
 	}
 }

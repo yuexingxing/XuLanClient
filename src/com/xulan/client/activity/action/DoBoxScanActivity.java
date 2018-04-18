@@ -86,6 +86,7 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onBaseCreate(Bundle savedInstanceState) {
 		setContentViewId(R.layout.activity_do_box_scan, this);
+		
 	}
 
 	@Override
@@ -145,17 +146,13 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
-	 */
-	@Override
 	public void onEventMainThread(Message msg) {
 		
 		if(msg.what == Constant.SCAN_DATA) {
 			String strBillcode = (String) msg.obj;
 			edtPackageBarcode.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
+			ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_CONTAINER, strBillcode, dataList);
 			if (scanData != null) {
 
 				edtPackageBarcode.setText(scanData.getPackBarcode());
@@ -219,7 +216,7 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
+			ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_CONTAINER, strBillcode, dataList);
 			if (scanData != null) {
 
 				edtPackageBarcode.setText(scanData.getPackBarcode());

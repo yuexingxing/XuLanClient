@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.xulan.client.MyApplication;
 import com.xulan.client.R;
@@ -16,9 +17,11 @@ import com.xulan.client.activity.BaseActivity;
 import com.xulan.client.adapter.MenuAdapter;
 import com.xulan.client.adapter.MenuAdapter.OnBottomClickListener;
 import com.xulan.client.data.MenuInfo;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.pdascan.RFID;
 import com.xulan.client.pdascan.RFID_Scan;
 import com.xulan.client.util.CommandTools;
+import com.xulan.client.util.Constant;
 import com.xulan.client.util.MenuInfoUtil;
 
 /** 
@@ -57,7 +60,7 @@ public class MainMenuActivity extends BaseActivity {
 				if(dataList.get(position).getActivity() != null) {
 					MenuInfo menuInfo = dataList.get(position);
 
-					Intent intent = new Intent(mContext, (Class<?>) menuInfo.getActivity());
+					Intent intent = new Intent(MainMenuActivity.this, (Class<?>) menuInfo.getActivity());
 
 					intent.putExtra("data", (Serializable)dataList);
 					intent.putExtra("actionId", menuInfo.getActionId());
@@ -75,7 +78,7 @@ public class MainMenuActivity extends BaseActivity {
 					MyApplication.m_physic_link_num = menuInfo.getLinkNum();
 					MyApplication.m_scan_type = menuInfo.getScanType();
 
-					mContext.startActivity(intent);
+					startActivity(intent);
 				}
 			}
 		});
@@ -96,6 +99,7 @@ public class MainMenuActivity extends BaseActivity {
 	public void onResume(){
 		super.onResume();
 
+		MyApplication.m_scan_type = Constant.SCAN_TYPE_MENU;
 		if(CommandTools.getDeviceName().equals("Android")){
 			RFID.closeRFID();
 			RFID_Scan.initRFIDScanner(MyApplication.getInstance());
@@ -107,7 +111,9 @@ public class MainMenuActivity extends BaseActivity {
 	 */
 	public void onEventMainThread(Message msg) {
 
-
+		if(msg.what == Constant.SCAN_DATA){
+//			Toast.makeText(this, "菜单栏", Toast.LENGTH_LONG).show();
+		}
 	}
 
 }

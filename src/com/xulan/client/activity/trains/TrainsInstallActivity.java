@@ -30,6 +30,7 @@ import com.xulan.client.adapter.CommonAdapter;
 import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.data.ScanNumInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
@@ -82,6 +83,7 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 	protected void onBaseCreate(Bundle savedInstanceState) {
 		setContentViewId(R.layout.activity_trains_install_scan, this);
 		ViewUtils.inject(this);
+
 	}
 
 	@Override
@@ -141,17 +143,15 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xulan.client.activity.BaseActivity#onEventMainThread(android.os.Message)
-	 */
-	@Override
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
-			String strBillcode = (String) msg.obj;
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_RAILEAY)){
+
+			String strBillcode = scanInfo.getBarcode();
 			trains_edt_4.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
+			ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_RAILEAY, strBillcode, dataList);
 			if (scanData != null) {
 				trains_edt_4.setText(scanData.getPackBarcode());
 				trains_edt_5.setText(scanData.getPackNumber());
@@ -220,7 +220,7 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 
 	public void checkData(String billcode){
 
-		ScanData scanData = DataUtilTools.checkScanData(billcode, dataList);
+		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_RAILEAY, billcode, dataList);
 		if (scanData != null) {
 
 			trains_edt_4.setText(scanData.getPackBarcode());
@@ -344,6 +344,7 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 						if (success == 0) {
 							JSONArray jsonArray = jsonObj.getJSONArray("data");
 							dataList.clear();
+							uploadList.clear();
 							List<ScanData> list = new ArrayList<ScanData>();
 							for (int i = 0; i < jsonArray.length(); i++) {
 								JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -481,5 +482,12 @@ public class TrainsInstallActivity extends BaseActivity implements OnClickListen
 		super.onStop();
 
 		RFID.stopRFID();
+	}
+
+	public void onDestory(){
+		super.onDestory();
+
+		dataList.clear();
+		uploadList.clear();
 	}
 }

@@ -71,6 +71,7 @@ public class BackScanActivity extends BaseActivity implements OnClickListener {
 	protected void onBaseCreate(Bundle savedInstanceState) {
 		setContentViewId(R.layout.activity_back_scan, this);
 		ViewUtils.inject(this);
+		
 	}
 
 	@Override
@@ -105,7 +106,6 @@ public class BackScanActivity extends BaseActivity implements OnClickListener {
 		PostTools.getLink(mContext, linkList);
 	}
 
-	@Override
 	public void onEventMainThread(Message msg) {
 
 		if(msg.what == Constant.SCAN_DATA){

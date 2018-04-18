@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Application;
@@ -26,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.data.UserInfo;
 import com.xulan.client.db.DBHelper;
 import com.xulan.client.net.NetSettings;
@@ -406,6 +410,16 @@ public class MyApplication extends Application {
 				msg.what = Constant.SCAN_DATA;
 				msg.obj = strBarcode;
 				MyApplication.getEventBus().post(msg);
+				
+//				ScanInfo scanInfo = new ScanInfo();
+//				scanInfo.setType(MyApplication.m_scan_type);
+//				scanInfo.setBarcode(strBarcode);
+//				scanInfo.setWhat(Constant.SCAN_DATA);
+//
+//				Message message = new Message();
+//				message.what = Constant.SCAN_DATA;
+//				message.obj = scanInfo;
+//				MyApplication.getEventBus().post(message);
 
 				return;
 			} else if (action.equals("com.android.scancontext")) {
@@ -474,10 +488,25 @@ public class MyApplication extends Application {
 			byte temp = intent.getByteExtra("barcodeType", (byte) 0);
 			android.util.Log.i("debug", "----codetype--" + temp);
 			String barcodeStr = new String(barcode, 0, barocodelen);
+			
+			String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]"; 
+			Pattern p = Pattern.compile(regEx); 
+			Matcher m = p.matcher(barcodeStr);
+			barcodeStr = m.replaceAll("").trim();
+			
+//			Message message = new Message();
+//			message.what = Constant.SCAN_DATA;
+//			message.obj = barcodeStr;
+//			MyApplication.getEventBus().post(message);
+			
+			ScanInfo scanInfo = new ScanInfo();
+			scanInfo.setType(MyApplication.m_scan_type);
+			scanInfo.setBarcode(barcodeStr);
+			scanInfo.setWhat(Constant.SCAN_DATA);
 
 			Message message = new Message();
 			message.what = Constant.SCAN_DATA;
-			message.obj = barcodeStr;
+			message.obj = scanInfo;
 			MyApplication.getEventBus().post(message);
 		}
 	};
