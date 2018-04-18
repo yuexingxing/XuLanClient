@@ -30,6 +30,7 @@ import com.xulan.client.adapter.CommonAdapter;
 import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.data.ScanNumInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
@@ -139,8 +140,10 @@ public class StrapScanActivity extends BaseActivity implements OnClickListener {
 
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
-			String strBillcode = (String) msg.obj;
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_STRAP)){
+
+			String strBillcode = scanInfo.getBarcode();
 			edtPackBarcode.setText(strBillcode);
 
 			ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_STRAP, strBillcode, dataList);

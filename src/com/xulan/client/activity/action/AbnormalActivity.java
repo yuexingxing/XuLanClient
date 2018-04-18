@@ -44,6 +44,7 @@ import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.LinkInfo;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
 import com.xulan.client.net.AsyncNetTask.OnPostExecuteListener;
@@ -170,8 +171,10 @@ public class AbnormalActivity extends BaseActivity implements OnClickListener {
 
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
-			String strBillcode = (String) msg.obj;
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_ABNORMAL)){
+
+			String strBillcode = scanInfo.getBarcode();
 			edtBillcode.setText(strBillcode);
 			addData(null);
 		}
@@ -239,17 +242,17 @@ public class AbnormalActivity extends BaseActivity implements OnClickListener {
 
 			edtBillcode.setText(strBillcode);
 			addData(null);
-			
-//			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-//			if (scanData != null) {
-//
-//				edtBillcode.setText(scanData.getPackBarcode());
-//				edtNumber.setText(scanData.getPackNumber());
-//				addData(null);
-//			} else {
-//				VoiceHint.playErrorSounds();
-//				CommandTools.showToast("条码不存在");
-//			}
+
+			//			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
+			//			if (scanData != null) {
+			//
+			//				edtBillcode.setText(scanData.getPackBarcode());
+			//				edtNumber.setText(scanData.getPackNumber());
+			//				addData(null);
+			//			} else {
+			//				VoiceHint.playErrorSounds();
+			//				CommandTools.showToast("条码不存在");
+			//			}
 			return;
 		}
 	}
@@ -266,13 +269,13 @@ public class AbnormalActivity extends BaseActivity implements OnClickListener {
 	 * @param v
 	 */
 	public void chooseNode(View v) {
-		
+
 		List<String> list = new ArrayList<String>();
 		for(int i=0; i<linkList.size(); i++){
 
 			list.add(linkList.get(i).getLinkName());
 		}
-		
+
 		SingleItemDialog.showDialog(mContext, getResources().getString(R.string.mode_step), false, list, new SingleItemCallBack() {
 
 			@Override

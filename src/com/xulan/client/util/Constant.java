@@ -58,7 +58,12 @@ public class Constant {
 	public static String SCAN_TYPE_OFFLINE = "offline"; //下线
 	public static String SCAN_TYPE_INSTALL = "install"; //安装
 	public static String SCAN_TYPE_TIEMAI = "stick"; //贴唛
-	
+
+	public static String SCAN_TYPE_SINGLE = "single"; //单件录入
+	public static String SCAN_TYPE_INQUERY = "inquery"; //查询
+	public static String SCAN_TYPE_BACK = "back"; //退运
+	public static String SCAN_TYPE_ABNORMAL = "abnormal"; //异常
+	public static String SCAN_TYPE_PHOTO = "photo"; //拍照
 	public static String SCAN_TYPE_MENU = "menu"; //菜单栏
 
 	public static String SP_LOGIN_NAME = "SP_LOGIN_NAME";

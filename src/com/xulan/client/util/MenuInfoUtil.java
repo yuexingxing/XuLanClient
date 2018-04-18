@@ -105,7 +105,7 @@ public class MenuInfoUtil {
 			info.setScanType(menuScanType[i]);
 			info.setActionName(menuTexts[i]);
 			info.setEnable(menuIsEnable[i]);
-			
+
 			info.setLinkNum(i+1);//操作环节
 
 			dataList.add(info);
@@ -136,7 +136,7 @@ public class MenuInfoUtil {
 		idList.add(R.string.photo);
 		idList.add(R.string.search);
 		menuTexts = CommandTools.getStr(idList, mContext);
-		
+
 		menuActivity = new Object[]{
 				TrainsInstallActivity.class, TaskListActivity.class,
 				TrainsInstallActivity.class, SingleScanActivity.class,
@@ -152,9 +152,9 @@ public class MenuInfoUtil {
 
 		menuScanType = new String[]{
 				Constant.SCAN_TYPE_RAILEAY, Constant.SCAN_TYPE_RAILEAY, 
-				Constant.SCAN_TYPE_RAILEAY, Constant.SCAN_TYPE_RAILEAY, 
-				Constant.SCAN_TYPE_RAILEAY, Constant.SCAN_TYPE_RAILEAY, 
-				Constant.SCAN_TYPE_RAILEAY, Constant.SCAN_TYPE_RAILEAY
+				Constant.SCAN_TYPE_RAILEAY, Constant.SCAN_TYPE_SINGLE, 
+				Constant.SCAN_TYPE_ABNORMAL, Constant.SCAN_TYPE_BACK, 
+				Constant.SCAN_TYPE_PHOTO, Constant.SCAN_TYPE_INQUERY
 		};
 	}
 
@@ -190,9 +190,10 @@ public class MenuInfoUtil {
 				R.drawable.icons_31, R.drawable.icons_32 };
 
 		menuScanType = new String[] { Constant.SCAN_TYPE_STORAGE,
-				Constant.SCAN_TYPE_STORAGE, Constant.SCAN_TYPE_STORAGE,
-				Constant.SCAN_TYPE_STORAGE, Constant.SCAN_TYPE_STORAGE,
-				Constant.SCAN_TYPE_STORAGE, Constant.SCAN_TYPE_STORAGE };
+				Constant.SCAN_TYPE_STORAGE, Constant.SCAN_TYPE_SINGLE, 
+				Constant.SCAN_TYPE_ABNORMAL, Constant.SCAN_TYPE_BACK, 
+				Constant.SCAN_TYPE_PHOTO, Constant.SCAN_TYPE_INQUERY 
+		};
 
 	}
 
@@ -234,9 +235,9 @@ public class MenuInfoUtil {
 
 		menuScanType = new String[]{
 				Constant.SCAN_TYPE_LAND, Constant.SCAN_TYPE_LAND, 
-				Constant.SCAN_TYPE_LAND, Constant.SCAN_TYPE_LAND, 
-				Constant.SCAN_TYPE_LAND, Constant.SCAN_TYPE_LAND, 
-				Constant.SCAN_TYPE_LAND, Constant.SCAN_TYPE_LAND
+				Constant.SCAN_TYPE_LAND, Constant.SCAN_TYPE_SINGLE, 
+				Constant.SCAN_TYPE_ABNORMAL, Constant.SCAN_TYPE_BACK, 
+				Constant.SCAN_TYPE_PHOTO, Constant.SCAN_TYPE_INQUERY
 		};
 
 	}
@@ -300,7 +301,7 @@ public class MenuInfoUtil {
 
 		menuScanType = new String[]{
 				Constant.SCAN_TYPE_INSTALL, 
-				Constant.SCAN_TYPE_INSTALL, Constant.SCAN_TYPE_INSTALL
+				Constant.SCAN_TYPE_PHOTO, Constant.SCAN_TYPE_INQUERY
 		};
 
 	}
@@ -391,9 +392,9 @@ public class MenuInfoUtil {
 		};
 
 		menuScanType = new String[]{
-				Constant.SCAN_TYPE_CONTAINER, Constant.SCAN_TYPE_CONTAINER, Constant.SCAN_TYPE_CONTAINER, 
-				Constant.SCAN_TYPE_CONTAINER, Constant.SCAN_TYPE_CONTAINER, 
-				Constant.SCAN_TYPE_CONTAINER, Constant.SCAN_TYPE_CONTAINER
+				Constant.SCAN_TYPE_CONTAINER, Constant.SCAN_TYPE_CONTAINER, Constant.SCAN_TYPE_SINGLE, 
+				Constant.SCAN_TYPE_ABNORMAL, Constant.SCAN_TYPE_BACK, 
+				Constant.SCAN_TYPE_PHOTO, Constant.SCAN_TYPE_INQUERY
 		};
 	}
 
@@ -435,9 +436,9 @@ public class MenuInfoUtil {
 
 		menuScanType = new String[]{
 				Constant.SCAN_TYPE_AIR, Constant.SCAN_TYPE_AIR, 
-				Constant.SCAN_TYPE_AIR, Constant.SCAN_TYPE_AIR, 
-				Constant.SCAN_TYPE_AIR, Constant.SCAN_TYPE_AIR, 
-				Constant.SCAN_TYPE_AIR, Constant.SCAN_TYPE_AIR
+				Constant.SCAN_TYPE_AIR, Constant.SCAN_TYPE_SINGLE, 
+				Constant.SCAN_TYPE_ABNORMAL, Constant.SCAN_TYPE_BACK, 
+				Constant.SCAN_TYPE_PHOTO, Constant.SCAN_TYPE_INQUERY
 		};
 
 	}
@@ -468,7 +469,8 @@ public class MenuInfoUtil {
 				LoadUnloadActivity.class, LoadUnloadActivity.class,
 				SingleScanActivity.class, AbnormalActivity.class,
 				BackScanActivity.class, ActionPhotoActivity.class,
-				InqueryActivity.class};
+				InqueryActivity.class
+		};
 
 		menuDrawable = new int[] { R.drawable.icons_06, R.drawable.icons_21,
 				R.drawable.icons_22, R.drawable.icons_19, R.drawable.icons_20,
@@ -476,9 +478,9 @@ public class MenuInfoUtil {
 
 		menuScanType = new String[]{
 				Constant.SCAN_TYPE_LOAD, Constant.SCAN_TYPE_LOAD, 
-				Constant.SCAN_TYPE_LOAD, Constant.SCAN_TYPE_LOAD, 
-				Constant.SCAN_TYPE_LOAD, Constant.SCAN_TYPE_LOAD, 
-				Constant.SCAN_TYPE_LOAD
+				Constant.SCAN_TYPE_SINGLE, Constant.SCAN_TYPE_ABNORMAL, 
+				Constant.SCAN_TYPE_BACK, Constant.SCAN_TYPE_PHOTO, 
+				Constant.SCAN_TYPE_INQUERY
 		};
 
 	}
@@ -521,9 +523,9 @@ public class MenuInfoUtil {
 
 		menuScanType = new String[]{
 				Constant.SCAN_TYPE_SEA, Constant.SCAN_TYPE_SEA,
-				Constant.SCAN_TYPE_SEA, Constant.SCAN_TYPE_SEA,
-				Constant.SCAN_TYPE_SEA, Constant.SCAN_TYPE_SEA,
-				Constant.SCAN_TYPE_SEA, Constant.SCAN_TYPE_SEA
+				Constant.SCAN_TYPE_SEA, Constant.SCAN_TYPE_SINGLE, 
+				Constant.SCAN_TYPE_ABNORMAL, Constant.SCAN_TYPE_BACK, 
+				Constant.SCAN_TYPE_PHOTO, Constant.SCAN_TYPE_INQUERY
 		};
 
 	}
@@ -560,9 +562,9 @@ public class MenuInfoUtil {
 		};
 
 		menuScanType = new String[]{
-				Constant.SCAN_TYPE_STRAP, Constant.SCAN_TYPE_STRAP,
-				Constant.SCAN_TYPE_STRAP, Constant.SCAN_TYPE_STRAP,
-				Constant.SCAN_TYPE_STRAP
+				Constant.SCAN_TYPE_STRAP, Constant.SCAN_TYPE_SINGLE, 
+				Constant.SCAN_TYPE_ABNORMAL, Constant.SCAN_TYPE_PHOTO, 
+				Constant.SCAN_TYPE_INQUERY
 		};
 
 	}
@@ -592,13 +594,13 @@ public class MenuInfoUtil {
 		};
 
 		menuScanType = new String[]{
-				Constant.SCAN_TYPE_OFFLINE, Constant.SCAN_TYPE_OFFLINE,
-				Constant.SCAN_TYPE_OFFLINE
+				Constant.SCAN_TYPE_OFFLINE, Constant.SCAN_TYPE_PHOTO,
+				Constant.SCAN_TYPE_INQUERY
 		};
 	}
-	
+
 	/**
-	 * 下线界面
+	 * 贴唛界面
 	 */
 	private void initStickMenu() {
 		menuIsEnable = new boolean[] {
@@ -618,7 +620,7 @@ public class MenuInfoUtil {
 		};
 
 		menuScanType = new String[]{
-				Constant.SCAN_TYPE_TIEMAI, Constant.SCAN_TYPE_TIEMAI
+				Constant.SCAN_TYPE_TIEMAI, Constant.SCAN_TYPE_INQUERY
 		};
 	}
 }

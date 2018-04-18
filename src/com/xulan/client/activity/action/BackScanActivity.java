@@ -28,6 +28,7 @@ import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.LinkInfo;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.util.CommandTools;
 import com.xulan.client.util.Constant;
@@ -71,7 +72,7 @@ public class BackScanActivity extends BaseActivity implements OnClickListener {
 	protected void onBaseCreate(Bundle savedInstanceState) {
 		setContentViewId(R.layout.activity_back_scan, this);
 		ViewUtils.inject(this);
-		
+
 	}
 
 	@Override
@@ -108,9 +109,10 @@ public class BackScanActivity extends BaseActivity implements OnClickListener {
 
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_BACK)){
 
-			String strBillcode = (String) msg.obj;
+			String strBillcode = scanInfo.getBarcode();
 			edtPackageBillcode.setText(strBillcode);
 			addData(null);
 		}
@@ -140,7 +142,7 @@ public class BackScanActivity extends BaseActivity implements OnClickListener {
 
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
-			
+
 			edtPackageBillcode.setText(strBillcode);
 			addData(null);
 			return;
@@ -148,7 +150,7 @@ public class BackScanActivity extends BaseActivity implements OnClickListener {
 	}
 
 	public void chooseLink(View v){
-		
+
 		List<String> list = new ArrayList<String>();
 		for(int i=0; i<linkList.size(); i++){
 
@@ -255,7 +257,7 @@ public class BackScanActivity extends BaseActivity implements OnClickListener {
 	 * @param v
 	 */
 	public void addData(View v){
-		
+
 		if ("".equals(edtLinkName.getText().toString())) {
 			CommandTools.showToast(getResources().getString(R.string.select_return_cargo_mode));
 			return;

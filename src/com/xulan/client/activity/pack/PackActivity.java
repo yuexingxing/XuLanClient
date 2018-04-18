@@ -103,6 +103,7 @@ public class PackActivity extends BaseActivity implements OnClickListener{
 		scan_num = dataList.size();
 
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.dobox_item) {
+			
 			@Override
 			public void convert(ViewHolder helper, ScanData item) {
 				helper.setText(R.id.land_tv1, commonAdapter.getIndex());

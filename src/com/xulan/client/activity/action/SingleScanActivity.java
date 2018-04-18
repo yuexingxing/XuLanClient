@@ -40,6 +40,7 @@ import com.xulan.client.R;
 import com.xulan.client.activity.BaseActivity;
 import com.xulan.client.data.LinkInfo;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.takephoto.Bimp;
 import com.xulan.client.util.CommandTools;
 import com.xulan.client.util.Constant;
@@ -132,8 +133,11 @@ public class SingleScanActivity extends BaseActivity{
 	}
 
 	public void onEventMainThread(Message msg) {
-		if(msg.what == Constant.SCAN_DATA) {
-			String strBillcode = (String) msg.obj;
+		
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_SINGLE)){
+
+			String strBillcode = scanInfo.getBarcode();
 			edtPackageBillcode.setText(strBillcode);
 		}
 	}

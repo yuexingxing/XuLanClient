@@ -29,6 +29,7 @@ import com.xulan.client.adapter.CommonAdapter;
 import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.data.ScanNumInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
@@ -86,7 +87,7 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onBaseCreate(Bundle savedInstanceState) {
 		setContentViewId(R.layout.activity_do_box_scan, this);
-		
+
 	}
 
 	@Override
@@ -147,21 +148,13 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 	}
 
 	public void onEventMainThread(Message msg) {
-		
-		if(msg.what == Constant.SCAN_DATA) {
-			String strBillcode = (String) msg.obj;
-			edtPackageBarcode.setText(strBillcode);
 
-			ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_CONTAINER, strBillcode, dataList);
-			if (scanData != null) {
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_CONTAINER)){
 
-				edtPackageBarcode.setText(scanData.getPackBarcode());
-				edtPackageNumber.setText(scanData.getPackNumber());
-				addData(null);
-			} else {
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			String strBillcode = scanInfo.getBarcode();
+
+			checkData(strBillcode);
 		}
 	}
 
@@ -216,17 +209,22 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
-			ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_CONTAINER, strBillcode, dataList);
-			if (scanData != null) {
-
-				edtPackageBarcode.setText(scanData.getPackBarcode());
-				edtPackageNumber.setText(scanData.getPackNumber());
-				addData(null);
-			} else {
-				VoiceHint.playErrorSounds();
-				CommandTools.showToast("条码不存在");
-			}
+			checkData(strBillcode);
 			return;
+		}
+	}
+
+	public void checkData(String strBillcode){
+
+		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_CONTAINER, strBillcode, dataList);
+		if (scanData != null) {
+
+			edtPackageBarcode.setText(scanData.getPackBarcode());
+			edtPackageNumber.setText(scanData.getPackNumber());
+			addData(null);
+		} else {
+			VoiceHint.playErrorSounds();
+			CommandTools.showToast("条码不存在");
 		}
 	}
 
@@ -351,15 +349,15 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 
 								list.add(scanData);
 							}
-							
+
 							List<ScanData> notUploadDataList = mScandataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId, taskId);
 							dataList.addAll(notUploadDataList);
-							
+
 							//去除重复数据
 							for (int j = 0; j < list.size(); j++) {
-								
+
 								for (int i = 0; i < dataList.size(); i++) {
-									
+
 									ScanData scanData = dataList.get(i);
 									if (scanData.getPackNumber().equals(list.get(j).getPackNumber())) {
 										list.remove(j);
@@ -478,5 +476,5 @@ public class DoBoxScanActivity extends BaseActivity implements OnClickListener {
 
 		RFID.stopRFID();
 	}
-	
+
 }

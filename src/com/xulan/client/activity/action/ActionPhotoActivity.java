@@ -45,6 +45,7 @@ import com.xulan.client.adapter.ViewHolder;
 import com.xulan.client.camera.CaptureActivity;
 import com.xulan.client.data.LinkInfo;
 import com.xulan.client.data.ScanData;
+import com.xulan.client.data.ScanInfo;
 import com.xulan.client.db.dao.ScanDataDao;
 import com.xulan.client.net.AsyncNetTask;
 import com.xulan.client.net.AsyncNetTask.OnPostExecuteListener;
@@ -83,10 +84,10 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 	@ViewInject(R.id.action_photo_tv_2) EditText edtBillcode;
 	@ViewInject(R.id.action_photo_tv_3) EditText edtNumber;
 	@ViewInject(R.id.action_photo_tv_4) EditText edtCount;
-	
+
 	@ViewInject(R.id.action_photo_tv1) TextView tvItemBarcode;
 	@ViewInject(R.id.action_photo_tv2) TextView tvItemBarno;
-	
+
 	@ViewInject(R.id.photo_tv_barcode) TextView tvBarcode;
 	@ViewInject(R.id.photo_tv_barno) TextView tvBarno;
 
@@ -104,7 +105,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 
 	private static final int TAKE_PICTURE = 0x000001;
 	private static final int TAKE_FOLDER = 0x000002;
-	
+
 	private ScanDataDao mScanDataDao = new ScanDataDao();
 
 	@Override
@@ -120,11 +121,11 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 		setRightTitle(getResources().getString(R.string.submit));
 		photo_layout = (LinearLayout) findViewById(R.id.photo_layout);
 		gridView = (GridView) findViewById(R.id.gridview);
-		
+
 		billCodeImg = (RelativeLayout) findViewById(R.id.bill_code_img);
-		
+
 		dataList = mScanDataDao.getNotUploadDataList(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
-		
+
 		mListView.setAdapter(commonAdapter = new CommonAdapter<ScanData>(mContext, dataList, R.layout.action_photo_item) {
 			@Override
 			public void convert(ViewHolder helper, ScanData item) {
@@ -136,7 +137,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 				helper.setText(R.id.action_photo_tv4, item.getPicture().size() + "");//图片数量
 				helper.setText(R.id.action_photo_tv5, item.getScanUser());
 				helper.setText(R.id.action_photo_tv6, item.getScanTime());
-				
+
 			}
 		});
 
@@ -155,16 +156,16 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 	@Override
 	public void initData() {
 		photoList.add(IMG_ADD_TAG);
-		
+
 		//包装显示的是商品条码、商品号码
 		if(MyApplication.m_scan_type.equals(Constant.SCAN_TYPE_OFFLINE) || MyApplication.m_scan_type.equals(Constant.SCAN_TYPE_INSTALL)) {
 			tvBarcode.setText(Res.getString(R.string.goods_barcode));
 			tvBarno.setText(Res.getString(R.string.goods_no));
-			
+
 			tvItemBarcode.setText(Res.getString(R.string.goods_barcode));
 			tvItemBarno.setText(Res.getString(R.string.goods_no));
 		}
-		
+
 		adapter = new GVAdapter();
 		gridView.setAdapter(adapter);
 		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -183,7 +184,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 
 		PostTools.getLink(mContext, linkList);
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -200,9 +201,10 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_PHOTO)){
 
-			String strBillcode = (String) msg.obj;
+			String strBillcode = scanInfo.getBarcode();
 			edtBillcode.setText(strBillcode);
 			addData(null);
 		}
@@ -216,10 +218,10 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 			if (data == null) {
 				return;
 			}
-			
+
 			final Uri uri = data.getData();
 			path = ImageTool.getImageAbsolutePath(this, uri);
-			
+
 			if (photoList.size() == Constant.MAX_PHOTO_COUNT + 1) {
 				removeItem();
 				refreshAdapter();
@@ -236,7 +238,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 			} else if (resultCode == RESULT_CANCELED) {
 				return;
 			}
-			
+
 			if (photoList.size() == Constant.MAX_PHOTO_COUNT + 1) {
 				removeItem();
 				refreshAdapter();
@@ -250,26 +252,26 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 			if (data == null) {
 				return;
 			}
-			
+
 			Bundle bundle = data.getExtras();
 			String strBillcode = bundle.getString("result");
 
 			edtBillcode.setText(strBillcode);
 			addData(null);
-			
-//			Bundle bundle = data.getExtras();
-//			String strBillcode = bundle.getString("result");
-//			
-//			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
-//			if (scanData != null) {
-//
-//				edtBillcode.setText(scanData.getPackBarcode());
-//				edtNumber.setText(scanData.getPackNumber());
-//				addData(null);
-//			} else {
-//				VoiceHint.playErrorSounds();
-//				CommandTools.showToast(getResources().getString(R.string.barcode_does_not_exist));
-//			}
+
+			//			Bundle bundle = data.getExtras();
+			//			String strBillcode = bundle.getString("result");
+			//			
+			//			ScanData scanData = DataUtilTools.checkScanData(strBillcode, dataList);
+			//			if (scanData != null) {
+			//
+			//				edtBillcode.setText(scanData.getPackBarcode());
+			//				edtNumber.setText(scanData.getPackNumber());
+			//				addData(null);
+			//			} else {
+			//				VoiceHint.playErrorSounds();
+			//				CommandTools.showToast(getResources().getString(R.string.barcode_does_not_exist));
+			//			}
 			return;
 		}
 	}
@@ -281,7 +283,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 			}
 		}
 	}
-	
+
 	private int link_num = -1;
 
 	/**
@@ -292,7 +294,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 		for (int i = 0; i < linkList.size(); i++) {
 			list.add(linkList.get(i).getLinkName());
 		}
-		
+
 		SingleItemDialog.showDialog(mContext, getResources().getString(R.string.mode_step), false, list, new SingleItemCallBack() {
 			@Override
 			public void callback(int pos) {
@@ -371,7 +373,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 				scanData.setMainGoodsId(goods_id);
 				scanData.setScaned("1");
 				scanData.setUploadStatus("0");
-				
+
 				List<String> list = new ArrayList<String>();
 				for (int i = 0; i < photoList.size(); i++) {
 					String str = photoList.get(i);
@@ -384,7 +386,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 
 				dataList.add(scanData);
 				commonAdapter.notifyDataSetChanged();
-				
+
 				mScanDataDao.addData(scanData);
 				mScanDataDao.addPicData(scanData);
 
@@ -463,7 +465,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 
 		}
 	}
-	
+
 	String strFolder;
 
 	public void getFromCamera() {
@@ -478,7 +480,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 			CommandTools.showDialog(mContext, "最多拍" + Constant.MAX_PHOTO_COUNT + "张照片");
 			return;
 		}
-		
+
 		String fileName = CommandTools.getTimes();
 		strFolder = Environment.getExternalStorageDirectory().getPath() + "/" +  fileName + ".JPEG";
 		Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -526,7 +528,7 @@ public class ActionPhotoActivity extends BaseActivity implements OnClickListener
 
 						if (success == 0) {
 							mScanDataDao.updateUploadState(list);
-							
+
 							List<ScanData> list = mScanDataDao.getNotUploadDataList2(MyApplication.m_scan_type, MyApplication.m_link_num + "", MyApplication.m_nodeId);
 							if (list.size() <= 0) {
 								finish();

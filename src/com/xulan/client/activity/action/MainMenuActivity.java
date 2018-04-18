@@ -69,12 +69,12 @@ public class MainMenuActivity extends BaseActivity {
 					intent.putExtra("actionName", menuInfo.getActionName());
 					intent.putExtra("taskNum", menuInfo.getTaskNum());
 					intent.putExtra("pos", position + 1);
-					
+
 					if (menuInfo.getActivity() == TaskListActivity.class) {
 						intent.putExtra("isArriver", 1);
 					}
 
-					MyApplication.m_link_num = position + 1;
+					MyApplication.m_link_num = menuInfo.getLinkNum();
 					MyApplication.m_physic_link_num = menuInfo.getLinkNum();
 					MyApplication.m_scan_type = menuInfo.getScanType();
 
@@ -82,7 +82,7 @@ public class MainMenuActivity extends BaseActivity {
 				}
 			}
 		});
-		
+
 		mGridView.setAdapter(scanMenuAdapter);
 		scanMenuAdapter.notifyDataSetChanged();
 	}
@@ -111,8 +111,9 @@ public class MainMenuActivity extends BaseActivity {
 	 */
 	public void onEventMainThread(Message msg) {
 
-		if(msg.what == Constant.SCAN_DATA){
-//			Toast.makeText(this, "菜单栏", Toast.LENGTH_LONG).show();
+		ScanInfo scanInfo = (ScanInfo) msg.obj;
+		if(scanInfo.getWhat() == Constant.SCAN_DATA && scanInfo.getType().equals(Constant.SCAN_TYPE_MENU)){
+			//			Toast.makeText(this, "菜单栏", Toast.LENGTH_LONG).show();
 		}
 	}
 
