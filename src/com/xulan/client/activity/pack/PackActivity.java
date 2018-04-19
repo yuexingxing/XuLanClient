@@ -60,6 +60,7 @@ import com.xulan.client.view.DelItemDialog.DelDialogCallback;
  *
  */
 public class PackActivity extends BaseActivity implements OnClickListener{
+	
 	private EditText pack_edt_taskname;
 	private EditText pack_goods_number;
 	private EditText pack_goods_code;
@@ -235,7 +236,7 @@ public class PackActivity extends BaseActivity implements OnClickListener{
 
 	public void checkData(String billcode){
 
-		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_INSTALL, billcode, dataList);
+		ScanData scanData = DataUtilTools.checkScanData(Constant.SCAN_TYPE_PACK, billcode, dataList);
 		if (scanData != null) {
 			pack_goods_code.setText(scanData.getMinutePackBarcode());
 			pack_goods_number.setText(scanData.getMinutePackNumber());
@@ -301,6 +302,7 @@ public class PackActivity extends BaseActivity implements OnClickListener{
 
 				mScandataDao.addData(data);  //保存数据
 				CommandTools.showToast("保存成功");
+				break;
 			}
 		}
 

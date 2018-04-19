@@ -374,6 +374,7 @@ public class OffLineScanActivity extends BaseActivity implements OnClickListener
 				
 				mScandataDao.addData(data);  //保存数据
 				CommandTools.showToast("保存成功");
+				break;
 			}
 		}
 
